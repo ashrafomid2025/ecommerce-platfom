@@ -2,10 +2,14 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
+export const metadata = {
+  title: "Home",
+};
 export default function Home() {
   return (
     <div>
-      <Button variant="destructive">Save</Button>
+      <p>prostore</p>
     </div>
   );
+  // route nav, footer
 }
