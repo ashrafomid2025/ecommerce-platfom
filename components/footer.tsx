@@ -4,9 +4,9 @@ import React from "react";
 function Footer() {
   const currentYear = new Date().getFullYear();
   return (
-    <footer className="border-t ">
-      <div className="flex-center p-5">
-        {currentYear} {APP_NAME}. All Rights Reserved
+    <footer className="flex-center border-t">
+      <div className="p-5">
+        {currentYear} {APP_NAME}. All Right Reserved
       </div>
     </footer>
   );

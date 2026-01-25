@@ -3,7 +3,9 @@ import { APP_NAME } from "@/lib/constants";
 import { ShoppingCart, UserIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-export default function Header() {
+import React from "react";
+
+function Header() {
   return (
     <header className="w-full border-b">
       <div className="wrapper flex-between">
@@ -16,7 +18,7 @@ export default function Header() {
               width={48}
               priority={true}
             />
-            <span className="hidden text-2xl font-bold ml-3 lg:block">
+            <span className="hidden lg:block font-bold text-2xl ml-3">
               {APP_NAME}
             </span>
           </Link>
@@ -28,7 +30,7 @@ export default function Header() {
             </Link>
           </Button>
           <Button asChild>
-            <Link href="/sign-in">
+            <Link href="/cart">
               <UserIcon /> Sign In
             </Link>
           </Button>
@@ -37,3 +39,5 @@ export default function Header() {
     </header>
   );
 }
+
+export default Header;
