@@ -1,26 +1,36 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./assets/styles/globals.css";
-import { APP_DESCRIPTION, APP_NAME, SERVER_URL } from "@/lib/constants";
+import { APP_DESCRIPTION, APP_NAME, APP_URL } from "@/lib/constants";
+import { ThemeProvider } from "next-themes";
 
 const inter = Inter({ subsets: ["latin"] });
-export const metadata: Metadata = {
+export const metadata = {
   title: {
-    template: `%s |${APP_NAME}`,
-    default: `${APP_NAME}`,
-  },
-  description: `${APP_DESCRIPTION}`,
-  metadataBase: new URL(SERVER_URL),
-};
-
+    template: `%s  | ${APP_NAME}`,
+    default: `${APP_NAME}`
+    },
+    description : `${APP_DESCRIPTION}`,
+    metadataBase: new URL(APP_URL),
+}
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} antialiased`}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.className} antialiased`}>
+        <ThemeProvider
+        attribute="class"
+        enableSystem
+        defaultTheme="light"
+        disableTransitionOnChange
+        >
+        {children}
+        </ThemeProvider>
+        </body>
+
     </html>
   );
 }

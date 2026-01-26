@@ -1,15 +1,11 @@
-// import { div } from "framer-motion/client";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import React from 'react'
 
-export const metadata = {
-  title: "Home",
-};
-export default function Home() {
+function page() {
   return (
     <div>
-      <p>prostore</p>
+      Hi
     </div>
-  );
-  // route nav, footer
+  )
 }
+
+export default page

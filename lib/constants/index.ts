@@ -1,6 +1,3 @@
-export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || "Prostore";
-export const APP_DESCRIPTION =
-  process.env.NEXT_PUBLIC_APP_DESCRIPTION ||
-  "Modern Ecommerce store built with Next.js";
-export const SERVER_URL =
-  process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
+export const APP_NAME = process.env.PUBLIC_NEXT_APP_NAME || "Prostore";
+export const APP_DESCRIPTION = process.env.PUBLIC_NEXT_APP_DESCRIPTION || "Modern ecommerce platform build with next.js";
+export const APP_URL = process.env.PUBLIC_NEXT_APP_DESCRIPTION || "http:localhost:300" 
