@@ -1,24 +1,23 @@
 "use client";
-
-import React, { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuLabel,
   DropdownMenuContent,
-  DropdownMenuSeparator,
   DropdownMenuCheckboxItem,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { MoonIcon, SunIcon, SunMoon } from "lucide-react";
-function ModeToggle() {
+import { useTheme } from "next-themes";
+import React, { useEffect, useState } from "react";
+
+function ToggleTheme() {
+  const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  const { theme, setTheme } = useTheme();
   if (!mounted) {
     return;
   }
@@ -27,14 +26,14 @@ function ModeToggle() {
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="focus-visible:ring-0 focus-visible:ring-offset-0"
+          className="focus-visible:ring-0  focus-visible:ring-offset-0"
         >
-          {theme === "system" ? (
-            <SunMoon />
+          {theme === "light" ? (
+            <SunIcon />
           ) : theme === "dark" ? (
             <MoonIcon />
           ) : (
-            <SunIcon />
+            <SunMoon />
           )}
         </Button>
       </DropdownMenuTrigger>
@@ -42,10 +41,10 @@ function ModeToggle() {
         <DropdownMenuLabel>Appreance</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuCheckboxItem
-          checked={theme === "system"}
-          onClick={() => setTheme("system")}
+          checked={theme === "light"}
+          onClick={() => setTheme("light")}
         >
-          System
+          Light
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
           checked={theme === "dark"}
@@ -54,14 +53,14 @@ function ModeToggle() {
           Dark
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
-          checked={theme === "light"}
-          onClick={() => setTheme("light")}
+          checked={theme === "system"}
+          onClick={() => setTheme("system")}
         >
-          Light
+          System
         </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
 }
 
-export default ModeToggle;
+export default ToggleTheme;
