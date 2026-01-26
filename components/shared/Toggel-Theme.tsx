@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu'
 import { useTheme } from 'next-themes'
 import { MoonIcon, SunIcon, SunMoon } from 'lucide-react';
+import { Button } from '../ui/button';
 
 function ToggelTheame() {
     const {theme, setTheme} = useTheme();
@@ -14,7 +15,8 @@ function ToggelTheame() {
     },[])
   return (
     <DropdownMenu>
-        <DropdownMenuTrigger>
+        <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className=' focus-visible:ring-0  focus-visible:ring-offset-0 '>
             {theme === "light"?(
                 <SunIcon />
             ):theme==="dark"?(
@@ -22,6 +24,7 @@ function ToggelTheame() {
             ):(
                 <SunMoon/>
             )}
+            </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
             <DropdownMenuLabel>Appreance</DropdownMenuLabel>
