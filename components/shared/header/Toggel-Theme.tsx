@@ -1,9 +1,9 @@
 "use client"
-import React, { useEffect, useState } from 'react'
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu'
+import { useEffect, useState } from 'react'
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../../ui/dropdown-menu'
 import { useTheme } from 'next-themes'
 import { MoonIcon, SunIcon, SunMoon } from 'lucide-react';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 
 function ToggelTheame() {
     const {theme, setTheme} = useTheme();
