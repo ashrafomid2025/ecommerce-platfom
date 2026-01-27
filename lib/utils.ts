@@ -6,3 +6,4 @@ export function cn(...inputs: ClassValue[]) {
 }
 // tailwind merge, tailwind variant
 // 5btn, info, danger, success
+// admin, user, header,footer

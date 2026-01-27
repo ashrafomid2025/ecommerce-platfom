@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import loader from "../app/assets/loader.gif";
-function LoadingPage() {
+import loader from "./assets/loader.gif";
+function LadingPage() {
   return (
     <div
       style={{
@@ -12,9 +12,9 @@ function LoadingPage() {
         alignItems: "center",
       }}
     >
-      <Image src={loader} height={150} width={150} alt="Loading" />
+      <Image src={loader} alt="Loading... " height={150} width={150} />
     </div>
   );
 }
 
-export default LoadingPage;
+export default LadingPage;
