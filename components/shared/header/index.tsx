@@ -11,7 +11,7 @@ function Header() {
    <header className='w-full flex-between px-5 border-b py-3'>
     <div className=' flex-start flex'>
         <Image src='/images/logo.svg' alt={APP_NAME} height={36} width={36} />
-        <span className='font-bold text-xl px-2'>{APP_NAME}</span>
+        <span className='font-bold hidden md:flex text-xl px-2'>{APP_NAME}</span>
     </div>
    <Menu />
    </header>
