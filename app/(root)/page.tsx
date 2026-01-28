@@ -1,7 +1,11 @@
+import ProductList from "@/components/shared/products/product-list";
+import sampleData from "@/db/sample-data";
+
 export default function Home() {
+  const data = sampleData;
   return (
     <div>
-      <p>prostore</p>
+      <ProductList data={sampleData.products} title="Newest Arrival" />
     </div>
   );
 }
