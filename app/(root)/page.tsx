@@ -1,10 +1,11 @@
-import React from 'react'
-
+import ProductList from '@/components/shared/Product/ProductList'
+import sampleData from '@/db/sample-data'
 async function page() {
   // await new Promise(resolve=> setTimeout(resolve,3000));
+  const data =  sampleData ;
   return (
     <div>
-      Hi
+      <ProductList data={data.products} title="Newest Arrival" />
     </div>
   )
 }
