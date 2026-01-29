@@ -8,4 +8,5 @@ export type Product = {
   numReviews: number;
   description: number;
   brand: null | string;
+  isFeatured: boolean;
 };
