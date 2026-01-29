@@ -2,24 +2,27 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import Stock from './stock'
 
 function Product({product}:{product:any}) {
   return (
-      <Card>
-        <CardHeader>
-          <Image src={product.image[0]} alt={product.name} />
-        </CardHeader>
-        <CardContent>
-          <h1>{product.brand}</h1>
+      <Card className='w-full max-w-sm'>
+        <CardHeader className='items-center p-0'>
           <Link href={`product/${product.slug}`}>
-          <h1>{product.name}</h1>
+          <Image src={product.image[0]} alt={product.name} height={300} width={300} />
           </Link>
-          <div>
+        </CardHeader>
+        <CardContent className='grid gap-4 p-4'>
+          <h1 className='text-xs'>{product.brand}</h1>
+          <Link href={`product/${product.slug}`}>
+          <h1 className='text-sm font-medium'>{product.name}</h1>
+          </Link>
+          <div className='flex-between gap-4'>
             <p>{product.rating}Stars</p>
             {product.stock?(
-              <p>{product.stock}</p>
+              <Stock value= {Number(product.price)} />
             ):(
-              <h1>Out Of Stock</h1>
+              <h1 className='text-destructive'>Out Of Stock</h1>
             )}
           </div>
         </CardContent>
