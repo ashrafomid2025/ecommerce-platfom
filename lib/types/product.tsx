@@ -6,4 +6,5 @@ export type Product = {
   price: number;
   rating: number;
   numReviews: number;
+  description: number;
 };
