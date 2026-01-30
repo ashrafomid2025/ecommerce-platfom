@@ -1,12 +1,13 @@
 import React from "react";
 import Product from "./product";
+import { ProductInfo } from "@/lib/types/product";
 
 function ProductList({
   data,
   title,
   limit,
 }: {
-  data: any;
+  data: ProductInfo[];
   title?: string;
   limit?: number;
 }) {

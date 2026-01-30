@@ -1,7 +1,7 @@
-export type Product = {
+export type ProductInfo = {
   slug: string;
   name: string;
-  image: string[];
+  images: string[];
   stock: number;
   price: number;
   rating: number;
@@ -9,4 +9,5 @@ export type Product = {
   description: number;
   brand: null | string;
   isFeatured: boolean;
+  category: string;
 };
