@@ -24,7 +24,7 @@ function ProductList({
           ))}
         </div>
       ) : (
-        <p>No product exist yet</p>
+        <p>No product exists yet</p>
       )}
     </div>
   );
