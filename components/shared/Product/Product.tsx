@@ -1,15 +1,15 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
 import Stock from './stock'
+import { product } from '@/lib/types/product'
 
-function Product({product}:{product:any}) {
+function Product({product}:{product:product}) {
   return (
       <Card className='w-full max-w-sm'>
         <CardHeader className='items-center p-0'>
           <Link href={`product/${product.slug}`}>
-          <Image src={product.image[0]} alt={product.name} height={300} width={300} />
+          <Image src={product.images[0]} alt={product.name} height={300} width={300} />
           </Link>
         </CardHeader>
         <CardContent className='grid gap-4 p-4'>

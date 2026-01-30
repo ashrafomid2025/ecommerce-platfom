@@ -5,7 +5,7 @@ async function page() {
   const data =  sampleData ;
   return (
     <div>
-      <ProductList data={data.products} title="Newest Arrival" />
+      <ProductList data={data.products} title="Newest Arrival" limit={4} />
     </div>
   )
 }
