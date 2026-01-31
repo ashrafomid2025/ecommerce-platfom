@@ -6,7 +6,7 @@ export type ProductInfo = {
   price: number;
   rating: number;
   numReviews: number;
-  description: number;
+  description: string;
   brand: null | string;
   isFeatured: boolean;
   category: string;
