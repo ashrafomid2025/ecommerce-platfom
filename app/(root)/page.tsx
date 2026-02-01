@@ -8,7 +8,7 @@ export default async function Home() {
   // await new Promise((resolve)=> setTimeout(resolve,3000));
   return (
     <div>
-      <Products data={data.products} title="Newest Arrivals" limit={4} />
+      <Products data={sampleData.products} title="Newest Arrival" limit={4} />
     </div>
   );
 }

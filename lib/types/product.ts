@@ -1,14 +1,14 @@
-export type Product = {
+export type ProductInfo = {
     name:string,
     slug:string,
     category: string,
     description: string,
     images:string[],
     price: number,
-    brand: string,
+    brand: null | string,
     rating: number,
     numReviews: number,
     stock: number,
     isFeatured: boolean,
-    banner: string
+    banner: null | string
 }

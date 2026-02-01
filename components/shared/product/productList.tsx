@@ -1,18 +1,16 @@
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import ProductCard from './ProductCard'
-import { Product } from '@/lib/types/product'
+import { ProductInfo } from '@/lib/types/product'
 
-function Products({data,title,limit}:{data:any,title?:string,limit?:number}) {
+function Product({data,title,limit}:{data:ProductInfo[],title?:string,limit?:number}) {
     const limitedData = limit? data.slice(0,limit):data;
   return (
     <div>
-      {title?(<h1 className='text-center w-full font-bold text-3xl py-3'>{title}</h1>):""}
+      {title?(<h1 className='w-full font-bold text-2xl py-3'>{title}</h1>):""}
       {limitedData.length >0?(
     <div className='h-fit w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3'>
-      {limitedData.map((product:Product) =>(
+      {limitedData.map((product:ProductInfo) =>(
         <ProductCard key={product.slug} product={product} />
       ))}
     </div>
@@ -23,4 +21,4 @@ function Products({data,title,limit}:{data:any,title?:string,limit?:number}) {
   )
 }
 
-export default Products
+export default Product
