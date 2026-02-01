@@ -1,7 +1,7 @@
 import Product from './Product'
 import { product } from '@/lib/types/product'
 
-function ProductList({data,title,limit}:{data:product , title? :string , limit:number}) {
+function ProductList({data,title,limit}:{data:product[] , title? :string , limit:number}) {
   const limitedData = limit? data.slice(0,4): data;
   return (
     <div>

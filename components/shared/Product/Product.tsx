@@ -7,7 +7,7 @@ import { product } from '@/lib/types/product'
 function Product({product}:{product:product}) {
   return (
       <Card className='w-full max-w-sm'>
-        <CardHeader className='items-center p-0'>
+        <CardHeader className='items-center flex justify-center p-0'>
           <Link href={`product/${product.slug}`}>
           <Image src={product.images[0]} alt={product.name} height={300} width={300} />
           </Link>
