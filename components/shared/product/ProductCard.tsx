@@ -3,9 +3,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import ProductPrice from './ProductPrice'
-import { ProductInfo } from '@/lib/types/product'
 
-function ProductCard({product}:{product:ProductInfo}) {
+function ProductCard({product}:{product:any}) {
   return (
     <Card>
             <CardHeader>

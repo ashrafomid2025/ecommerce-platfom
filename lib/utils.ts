@@ -6,3 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 // tailwind merge, tailwind variant
 // 5btn, info, danger, success
+
+export function convertToPlainObject<T>(value:T):T{
+  return JSON.parse(JSON.stringify(value));
+}
