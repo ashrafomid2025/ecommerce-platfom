@@ -1,4 +1,4 @@
-export type product={
+export type productInfo={
     name: string,
     slug: string,
     category:string,
