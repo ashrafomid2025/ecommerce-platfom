@@ -9,3 +9,9 @@ export function cn(...inputs: ClassValue[]) {
 export function converbToPlaneObject<T>(value: T):T{
   return JSON.parse(JSON.stringify(value));
 }
+export function priceConverter(value: number):string{
+  const priceString = value.toString();
+  const [int , float] = priceString.split(".");
+  return `${int} . ${float? float : float.padEnd(2, '0')}`;
+
+}
