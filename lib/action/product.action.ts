@@ -12,9 +12,8 @@ export async function getLatestProducts() {
   return convertToPlainObject(data);
 }
 // get single product by slug
-export async function getProductBySlug(slug: string) {
-  const data = await prisma.product.findFirst({
+export async function getSingleProduct(slug: string) {
+  return await prisma.product.findFirst({
     where: { slug: slug },
   });
-  return convertToPlainObject(data);
 }

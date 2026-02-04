@@ -1,8 +1,8 @@
 import React from "react";
 import Product from "./product";
-import { ProductInfo } from "@/lib/types/product";
+import { ProductInfo } from "@/types";
 
-function ProductList({ data, title }: { data: any; title?: string }) {
+function ProductList({ data, title }: { data: ProductInfo[]; title?: string }) {
   return (
     <div>
       <div className="mt-6">

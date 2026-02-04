@@ -5,7 +5,7 @@ import React from "react";
 import ProductPrice from "./product-price";
 import { ProductInfo } from "@/types";
 
-function Product({ product }: { product: any }) {
+function Product({ product }: { product: ProductInfo }) {
   return (
     <Card className="w-full max-w-sm">
       <CardHeader className="items-center p-0">

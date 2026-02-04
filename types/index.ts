@@ -5,4 +5,3 @@ export type ProductInfo = z.infer<typeof productInsertSchema> & {
   rating: string;
   created_at: Date;
 };
-// read
