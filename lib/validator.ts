@@ -1,4 +1,11 @@
 import { z } from "zod";
+import { priceConverter } from "./utils";
+const currency = z
+  .string()
+  .refine(
+    (value) => /^\d+(\.\d{2})?$/.test(priceConverter(Number(value))),
+    "Price must be have exatly 2 decimal places",
+  );
 
 // validator for inserting product
 export const productInsertSchema = z.object({
@@ -16,4 +23,6 @@ export const productInsertSchema = z.object({
     .min(1, "You should select at least 1 image for the product"),
   banner: z.string().nullable(),
   stock: z.coerce.number(),
+  isFeatured: z.boolean(),
+  price: currency,
 });
