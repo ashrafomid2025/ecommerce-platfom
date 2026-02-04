@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import ProductPrice from "./product-price";
-import { ProductInfo } from "@/lib/types/product";
+import { ProductInfo } from "@/types";
 
 function Product({ product }: { product: any }) {
   return (
