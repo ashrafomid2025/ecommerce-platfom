@@ -1,15 +1,16 @@
 import Link from 'next/link'
 import React from 'react'
 import ProductCard from './ProductCard'
+import { ProductInfo } from '@/types/product';
 
-function Product({data,title}:{data:any,title?:string}) {
+function Product({data,title}:{data:ProductInfo[],title?:string}) {
     const limitedData = data;
   return (
     <div>
       {title?(<h1 className='w-full font-bold text-2xl py-3'>{title}</h1>):""}
       {limitedData.length >0?(
     <div className='h-fit w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3'>
-      {limitedData.map((product:any) =>(
+      {limitedData.map((product:ProductInfo) =>(
         <ProductCard key={product.slug} product={product} />
       ))}
     </div>

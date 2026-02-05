@@ -12,7 +12,7 @@ export function convertToPlainObject<T>(value:T):T{
 }
 
 export function priceConverter(value:number):string{
-  const priceString = value.toString(value);
+  const priceString = value.toString();
   const [int,float] = priceString.split(".");
-  return `${int}. ${float?float:float.padEnd(2,"0")}`; 
+  return float? `${int}. ${float?float:float.padEnd(2,"0")}`: `${int}.00`; 
 }
