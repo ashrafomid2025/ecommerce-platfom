@@ -1,3 +1,4 @@
+import ProductImages from "@/components/shared/products/product-image";
 import ProductPrice from "@/components/shared/products/product-price";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,7 +18,10 @@ export default async function DetailsPage({
     <>
       <section>
         <div className="grid grid-cols-1 md:grid-cols-5 gap-1.5">
-          <div className="col-span-2">{/* Images */}</div>
+          <div className="col-span-2">
+            {/* Images */}
+            <ProductImages images={product.images} />
+          </div>
           <div className="col-span-2">
             {/* details */}
             <div className="flex flex-col gap-6">
