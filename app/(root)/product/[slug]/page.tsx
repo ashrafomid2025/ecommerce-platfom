@@ -1,3 +1,4 @@
+import ProductImage from '@/components/shared/product/Product-image';
 import ProductPrice from '@/components/shared/product/ProductPrice';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -18,6 +19,7 @@ async function DetailsPage({params}:{params:Promise<{slug:string}>}) {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-1.5">
             <div className="col-span-2">
                 {/* image */}
+                <ProductImage images={product.images} />
             </div>
             <div className="col-span-2">
                 {/* details */}
