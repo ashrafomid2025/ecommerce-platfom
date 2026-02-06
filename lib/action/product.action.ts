@@ -10,3 +10,8 @@ export async function getLatestProduct() {
        }});
    return converbToPlaneObject(data);
 }
+export async function getSingelProduct(slug) {
+   return await prisma.ecommerePlatform.findFirst({
+      where: {slug : slug}
+   })
+}
