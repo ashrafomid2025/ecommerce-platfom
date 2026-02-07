@@ -46,7 +46,7 @@ export default async function DetailsPage({
           </div>
           <div>
             {/* order */}
-            <Card className="px-4">
+            <Card className="lg:px-4">
               <CardContent className="w-full flex flex-col gap-3">
                 <div className="flex justify-between">
                   <div>Price</div>

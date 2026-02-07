@@ -4,27 +4,33 @@ import Image from "next/image";
 import React, { useState } from "react";
 
 function ProductImages({ images }: { images: string[] }) {
-  const [current, setCurrent] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   return (
     <div className="space-y-4">
       <Image
-        src={images[current]}
-        alt="product image"
+        src={images[currentIndex]}
         height={1000}
         width={1000}
+        alt="product image"
         className="min-h-75 object-cover object-center"
       />
-      <div className="flex space-x-2">
+      <div className="flex gap-3">
         {images.map((image, index) => (
           <div
+            onClick={() => setCurrentIndex(index)}
             key={index}
-            onClick={() => setCurrent(index)}
             className={cn(
-              "border cursor-pointer hover:border-orange-600 ",
-              current === index && "border-orange-500",
+              "border cursor-pointer rounded-md hover:border-orange-700",
+              currentIndex === index && "border-orange-400",
             )}
           >
-            <Image src={image} alt="product image" height={100} width={100} />
+            <Image
+              className="rounded-md"
+              src={image}
+              alt="product image"
+              height={100}
+              width={100}
+            />
           </div>
         ))}
       </div>
