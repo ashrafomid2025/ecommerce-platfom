@@ -4,7 +4,7 @@ import Link from "next/link";
 import React from "react";
 import ProductPrice from "./product-price";
 import { ProductInfo } from "@/types";
-
+// seeding (read, delete, update, create)
 function Product({ product }: { product: ProductInfo }) {
   return (
     <Card className="w-full max-w-sm">

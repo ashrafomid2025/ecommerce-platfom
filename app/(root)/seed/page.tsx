@@ -8,9 +8,13 @@ async function Seed() {
   await prisma.session.deleteMany();
   await prisma.verificationToken.deleteMany();
   await prisma.user.deleteMany();
-  await prisma.product.createMany({ data: sampleData.products });
-  await prisma.user.createMany({ data: sampleData.users });
-  return <div>seeding</div>;
+  await prisma.product.createMany({
+    data: sampleData.products,
+  });
+  await prisma.user.createMany({
+    data: sampleData.users,
+  });
+  return <div>Seeding the data</div>;
 }
 
 export default Seed;
