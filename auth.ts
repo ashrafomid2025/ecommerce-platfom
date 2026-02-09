@@ -1,18 +1,17 @@
 import NextAuth from "next-auth";
 import type { NextAuthConfig } from "next-auth";
-import { prisma } from "./lib/db/lib";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import { prisma } from "./lib/db/lib";
 import CredentialProvider from "next-auth/providers/credentials";
 import { compareSync } from "bcrypt-ts-edge";
-import { email } from "zod";
-export const config = {
+export const setting = {
   pages: {
-    signIn: "sign-in",
-    error: "sign-in",
+    signIn: "/sign-in",
+    error: "/sign-in",
   },
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60,
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -24,10 +23,9 @@ export const config = {
       async authorize(credentials) {
         if (credentials === null) return null;
         const user = await prisma.user.findFirst({
-          where: {
-            email: credentials.email as string,
-          },
+          where: { email: credentials.email as string },
         });
+        // ahmad@example.com
         if (user && user.password) {
           const isMatch = compareSync(
             credentials.password as string,
@@ -37,7 +35,7 @@ export const config = {
             return {
               id: user.id,
               name: user.name,
-              email: user.name,
+              email: user.email,
               role: user.role,
             };
           }
@@ -46,6 +44,11 @@ export const config = {
       },
     }),
   ],
+  callbacks: {
+    async session({ session, user, trigger, token }: any) {
+      session.user.id = token.sub;
+      return session;
+    },
+  },
 } satisfies NextAuthConfig;
-
-export const { handlers, auth, signIn, signOut } = NextAuth(config);
+export const { handlers, auth, signIn, signOut } = NextAuth(setting);
