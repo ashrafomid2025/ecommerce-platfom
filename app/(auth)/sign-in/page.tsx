@@ -22,7 +22,7 @@ export default function Login() {
               width={100}
             />
           </Link>
-          <CardTitle className="text-center">Login</CardTitle>
+          <CardTitle className="text-center">Sign In</CardTitle>
           <CardDescription className="text-center">
             Sign In with email and password
           </CardDescription>
