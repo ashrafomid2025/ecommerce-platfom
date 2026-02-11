@@ -24,7 +24,7 @@ export default function Login() {
           </Link>
           <CardTitle className="text-center">Login</CardTitle>
           <CardDescription className="text-center">
-            Login with email and password
+            Sign In with email and password
           </CardDescription>
         </CardHeader>
         <CardContent>{/* input */}</CardContent>
