@@ -26,6 +26,7 @@ export const setting = {
           where: { email: credentials.email as string },
         });
         // ahmad@example.com
+
         if (user && user.password) {
           const isMatch = compareSync(
             credentials.password as string,

@@ -26,3 +26,9 @@ export const productInsertSchema = z.object({
   isFeatured: z.boolean(),
   price: currency,
 });
+
+// validation user
+export const authValidationSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(6, "The password must be at least 6 characters"),
+});
