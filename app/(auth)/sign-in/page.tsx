@@ -1,5 +1,6 @@
 import {
   Card,
+  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
@@ -26,6 +27,7 @@ export default function Login() {
             Login with email and password
           </CardDescription>
         </CardHeader>
+        <CardContent>{/* input */}</CardContent>
       </Card>
     </div>
   );

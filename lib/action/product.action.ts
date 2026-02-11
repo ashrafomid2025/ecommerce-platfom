@@ -17,3 +17,4 @@ export async function getSingleProduct(slug: string) {
     where: { slug: slug },
   });
 }
+//
