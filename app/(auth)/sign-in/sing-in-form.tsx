@@ -1,1 +1,3 @@
-export default function singInForm() {}
+export default function singInForm() {
+  return <div></div>;
+}
