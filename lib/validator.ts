@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { email, z } from "zod";
 // validator for inserting product
 export const productInsertSchema = z.object({
     name: z.string().min(3, "The Product Name Must be at least 3 Cheracters"),
@@ -9,4 +9,8 @@ export const productInsertSchema = z.object({
     images: z.array(z.string()).min(1 , "You should select at least 1 image for the product"),
     bannere: z.string(). nullable(),
     stock: z.coerce.number(),
+})
+export const authValidationScema = z.object({
+    email: z.string().email('Invalid email address'),
+    password: z.string().min(6,'The password must be at least 6 characters'),
 })
