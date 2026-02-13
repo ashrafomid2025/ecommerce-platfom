@@ -3,9 +3,7 @@ import type { NextAuthConfig } from "next-auth";
 import {PrismaAdapter} from "@auth/prisma-adapter"
 import CredentialsProvider from "next-auth/providers/credentials"
 import { prisma } from "./lib/db/lib";
-import { email } from "zod";
 import { compareSync } from "bcrypt-ts-edge";
-import { id } from "zod/v4/locales";
 export const setting ={
             pages: {
                 signIn: '/sin-in',
