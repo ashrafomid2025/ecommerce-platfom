@@ -10,10 +10,16 @@ import Image from "next/image";
 import Link from "next/link";
 import CredentialSignInForm from "./credential-signin-form";
 import { Metadata } from "next";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 export const metadata: Metadata = {
   title: "Sign In",
 };
-export default function Login() {
+export default async function Login() {
+  const session = await auth();
+  if (session) {
+    redirect("/");
+  }
   return (
     <div className="w-full max-w-md mx-auto">
       <Card>
