@@ -8,6 +8,7 @@ import {
 import { APP_NAME } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
+import CredentialSignInForm from "./credential-signin-form";
 
 export default function Login() {
   return (
@@ -27,7 +28,10 @@ export default function Login() {
             Sign In with email and password
           </CardDescription>
         </CardHeader>
-        <CardContent>{/* input */}</CardContent>
+        <CardContent>
+          {/* input */}
+          <CredentialSignInForm />
+        </CardContent>
       </Card>
     </div>
   );

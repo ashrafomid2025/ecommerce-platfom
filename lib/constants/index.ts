@@ -4,3 +4,7 @@ export const APP_DESCRIPTION =
 
 export const APP_URL = process.env.PUBLIC_NEXT_APP_URL || "http:localhost:3000";
 export const PRODUCT_LIMIT = process.env.PUBLIC_NEXT_PRODUCT_LIMIT || 4;
+export const signInDefaultValue = {
+  email: "",
+  password: "",
+};
