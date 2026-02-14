@@ -22,6 +22,6 @@ export async function signInUsersWithCredentials(
   }
 }
 // actionstate
-export async function singOutUser() {
+export async function signOutUser() {
   await signOut();
 }

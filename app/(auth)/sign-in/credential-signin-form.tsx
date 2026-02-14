@@ -1,13 +1,29 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { signInUsersWithCredentials } from "@/lib/action/auth.action";
 import { signInDefaultValue } from "@/lib/constants";
 import Link from "next/link";
 import React from "react";
-
-function CredentialSignInForm() {
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
+const SignInButton = () => {
+  const { pending } = useFormStatus();
   return (
-    <form>
+    <Button disabled={pending} className="w-full" variant="default">
+      {pending ? "Signing In..." : "Sign In"}
+    </Button>
+  );
+};
+function CredentialSignInForm() {
+  const [data, action] = useActionState(signInUsersWithCredentials, {
+    success: false,
+    message: "",
+  });
+
+  return (
+    <form action={action}>
       <div className="space-y-4">
         <div>
           <Label htmlFor="email">Email</Label>
@@ -32,10 +48,11 @@ function CredentialSignInForm() {
           />
         </div>
         <div>
-          <Button variant="default" className="w-full">
-            Sign In
-          </Button>
+          <SignInButton />
         </div>
+        {data && !data.success && (
+          <div className="text-center text-destructive">{data.message}</div>
+        )}
         <div className="text-sm text-center text-muted-foreground">
           Don't have an account?{" "}
           <Link href="/sign-up" className="link">
