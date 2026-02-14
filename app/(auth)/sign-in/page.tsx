@@ -9,7 +9,10 @@ import { APP_NAME } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
 import CredentialSignInForm from "./credential-signin-form";
-
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Sign In",
+};
 export default function Login() {
   return (
     <div className="w-full max-w-md mx-auto">
