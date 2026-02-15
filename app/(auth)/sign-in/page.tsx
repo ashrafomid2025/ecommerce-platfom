@@ -8,10 +8,11 @@ import {
 import { APP_NAME } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
-import CredentialSignInForm from "./credential-signin-form";
-import { Metadata } from "next";
+
+import type { Metadata } from "next";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import SignInWithCredentialForm from "@/components/credential-signin-form";
 export const metadata: Metadata = {
   title: "Sign In",
 };
@@ -38,8 +39,7 @@ export default async function Login() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {/* input */}
-          <CredentialSignInForm />
+          <SignInWithCredentialForm />
         </CardContent>
       </Card>
     </div>
