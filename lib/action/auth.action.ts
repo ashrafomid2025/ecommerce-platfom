@@ -12,7 +12,11 @@ export async function signInUsersWithCredentials(
       email: formData.get("email"),
       password: formData.get("password"),
     });
-    await signIn("credentials", user);
+    await signIn("credentials", {
+      email: user.email,
+      password: user.password,
+      redirect: false,
+    });
     return { success: true, message: "user logged in successfully" };
   } catch (err) {
     if (isRedirectError(err)) {

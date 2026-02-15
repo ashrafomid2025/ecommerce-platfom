@@ -4,7 +4,8 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "./lib/db/lib";
 import CredentialProvider from "next-auth/providers/credentials";
 import { compareSync } from "bcrypt-ts-edge";
-export const setting = {
+export const authConfig = {
+  secret: process.env.NEXTAUTH_SECRECT,
   pages: {
     signIn: "/sign-in",
     error: "/sign-in",
@@ -25,7 +26,6 @@ export const setting = {
         const user = await prisma.user.findFirst({
           where: { email: credentials.email as string },
         });
-        // ahmad@example.com
 
         if (user && user.password) {
           const isMatch = compareSync(
@@ -48,8 +48,11 @@ export const setting = {
   callbacks: {
     async session({ session, user, trigger, token }: any) {
       session.user.id = token.sub;
+      if (trigger === "update") {
+        session.user.name = user.name;
+      }
       return session;
     },
   },
 } satisfies NextAuthConfig;
-export const { handlers, auth, signIn, signOut } = NextAuth(setting);
+export const { handlers, auth, signIn, signOut } = NextAuth(authConfig);
