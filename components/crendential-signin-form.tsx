@@ -22,7 +22,7 @@ function SignInWithCredentialForm() {
         message: ""
     });
   return (
-    <form action="">
+    <form action={action}>
         <div className="space-y-4">
             <div className='space-y-2'>
                 <Label htmlFor='email'>Email</Label>
