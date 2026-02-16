@@ -1,6 +1,5 @@
 import { signIn, signOut } from "@/auth";
 import { authValidationSchema } from "../validator";
-import { success } from "zod";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 
 export async function signInUsersWithCredentials(prevstate : unknown, formData: FormData){
@@ -9,12 +8,16 @@ export async function signInUsersWithCredentials(prevstate : unknown, formData: 
             email: formData.get("email"),
             password: formData.get("password")
         });
-        await signIn("credentials",user);
+        await signIn("credentials",{
+            email: user.email,
+            password: user.password,
+            redirect: false
+        });
         return {success: true, message: 'user logged in successfully'}
     }
     catch(err){
         if(isRedirectError(err)) throw err;
-        return {success: false, message: 'Invalid email'}
+        return {success: false, message: 'Invalid email or password'}
     }
 }
 

@@ -5,7 +5,8 @@ import { prisma } from "./lib/db";
 import  CredentialsProvider  from "next-auth/providers/credentials";
 import { compareSync } from "bcrypt-ts-edge";
 
-export const setting = {
+export const authConfig = {
+    secret: process.env.NEXTAUTH_SECRET,
     pages: {
         signIn: '/sign-in',
         error: '/sign-in'
@@ -49,4 +50,4 @@ export const setting = {
     }
 
 } satisfies NextAuthConfig;
-export const { handlers, auth, signIn, signOut } = NextAuth(setting);
+export const { handlers, auth, signIn, signOut } = NextAuth(authConfig);

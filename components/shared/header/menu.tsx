@@ -14,7 +14,7 @@ function Menu() {
                     <Link href="/cart" ><ShoppingCart /> Cart</Link>
                 </Button>
                 <Button asChild >
-                    <Link href="/cart" ><UserCircle /> Sign in</Link>
+                    <Link href="/sign-in" ><UserCircle /> Sign in</Link>
                 </Button>
       </nav>
       <nav className='md:hidden'>
@@ -29,7 +29,7 @@ function Menu() {
                     <Link href="/cart" ><ShoppingCart /> Cart</Link>
                 </Button>
                 <Button asChild >
-                    <Link href="/cart" ><UserCircle /> Sign in</Link>
+                    <Link href="/sign-in" ><UserCircle /> Sign in</Link>
                 </Button>
                 <SheetDescription></SheetDescription>
             </SheetContent>
