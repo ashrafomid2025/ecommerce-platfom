@@ -1,8 +1,18 @@
+import { auth } from "@/auth"
+import LoginwithCredintal from "@/components/login-with-credintial"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-
-function signIn() {
+import { redirect } from "next/navigation"
+export const metadata: Metadata = {
+    title: "Sign In"
+}
+async function signIn() {
+    const session = await auth;
+    if(session){
+        redirect("/");
+    }
   return (
     <div className="w-full max-w-md mx-auto">
         <Card>
@@ -17,6 +27,7 @@ function signIn() {
             </CardHeader>
             <CardContent>
                 {/* input */}
+            <LoginwithCredintal />
             </CardContent>
         </Card>
     </div>

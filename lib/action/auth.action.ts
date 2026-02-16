@@ -8,7 +8,11 @@ export async function signInuserWithCredentiols(prevState:unknown , formData: Fo
             email: formData.get('email'),
             password: formData.get('password'),
         })
-        await signIn('credentials' , user)
+        await signIn('credentials' , {
+            email: user.email,
+            password: user.password,
+            redirect: false,
+        })
         return {success: true, message: 'user logged In successfuly'}
     }
     catch(err){
@@ -19,6 +23,6 @@ export async function signInuserWithCredentiols(prevState:unknown , formData: Fo
     }
 }
 // 
-export async function sinOutuser(){
+export async function signOutuser(){
     await sinOut();
 }
