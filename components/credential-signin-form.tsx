@@ -8,6 +8,7 @@ import { signInDefaultValue } from "@/lib/constants";
 import { Button } from "./ui/button";
 import { signInUsersWithCredentials } from "@/lib/action/auth.action";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 function SignInButton() {
   const { pending } = useFormStatus();
@@ -27,9 +28,12 @@ function SignInWithCredentialForm() {
     success: false,
     message: "",
   });
+  const seachParams = useSearchParams();
+  const callbackUrl = seachParams.get("callbackUrl") || "/";
 
   return (
     <form action={action}>
+      <input type="hidden" name="callbackUrl" value={callbackUrl} />
       <div className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>

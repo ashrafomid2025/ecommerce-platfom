@@ -16,10 +16,15 @@ import SignInWithCredentialForm from "@/components/credential-signin-form";
 export const metadata: Metadata = {
   title: "Sign In",
 };
-export default async function Login() {
+export default async function Login({
+  seachParams,
+}: {
+  seachParams: Promise<{ callbackUrl: string }>;
+}) {
+  const { callbackUrl } = await seachParams;
   const session = await auth();
   if (session) {
-    redirect("/");
+    redirect(callbackUrl || "/");
   }
   return (
     <div className="w-full max-w-md mx-auto">
