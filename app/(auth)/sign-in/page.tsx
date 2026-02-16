@@ -21,10 +21,9 @@ export default async function Login({
 }: {
   seachParams: Promise<{ callbackUrl: string }>;
 }) {
-  const { callbackUrl } = await seachParams;
   const session = await auth();
   if (session) {
-    redirect(callbackUrl || "/");
+    redirect("/");
   }
   return (
     <div className="w-full max-w-md mx-auto">
