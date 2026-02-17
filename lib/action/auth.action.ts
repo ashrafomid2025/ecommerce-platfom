@@ -1,7 +1,41 @@
 "use server"
-import { authValidationScema } from "../validator";
-import { signIn, sinOut } from "@/auth";
+import { authValidationScema, signUpUser } from "../validator";
+import { signIn, signOut , auth } from "@/auth";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
+import { hashSync } from "bcrypt-ts-edge";
+import { prisma } from "../db/lib";
+export async function signUpuser(prevState:unknown , formData:FormData){
+    try{
+        const user = signUpUser.parse({
+        name: formData.get('name'),
+        email:formData.get("email"),
+        password: formData.get("password"),
+        confermPassword: formData.get("confermPassword"),
+    });
+    const passwordEncrept = hashSync(user.ConfermPassword , 10);
+    await prisma.user.create({
+        data:{
+            name: user.name,
+            email: user.email,
+            password: passwordEncrept,
+        },
+    });
+    await signIn("credentials", {
+        email: user.email,
+        password: user.password,
+    });
+    return {success: true , message: "user created and sign in successfully"}
+    }
+    
+    catch(err){
+        if(isRedirectError(err)){
+            throw err;
+        }
+        return {success: false , message: "somting went wrong",}
+    }
+}
+// function sign up endded
+// function sign in start
 export async function signInuserWithCredentiols(prevState:unknown , formData: FormData){
     try{
         const user = authValidationScema.parse({
@@ -24,5 +58,5 @@ export async function signInuserWithCredentiols(prevState:unknown , formData: Fo
 }
 // 
 export async function signOutuser(){
-    await sinOut();
+    await signOut();
 }

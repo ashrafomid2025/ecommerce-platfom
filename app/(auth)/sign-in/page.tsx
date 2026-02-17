@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     title: "Sign In"
 }
 async function signIn() {
-    const session = await auth;
+    const session = await auth();
     if(session){
         redirect("/");
     }

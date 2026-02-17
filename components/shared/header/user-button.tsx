@@ -9,13 +9,13 @@ async function UserButton() {
     if(!session){
         return(
              <Button asChild>
-              <Link href="/cart">
+              <Link href="/sign-in">
                 <UserIcon /> Sign In
               </Link>
             </Button>
         )
     }
-    const firstLetterOfName = session.user?.name?.charAt(0).toUpperCase() || "U";
+    const firstLetterOfName = session.user?.name?.charAt(0).toLocaleUpperCase();
   return (
     <div className='flex gap-2 items-center'>
         <DropdownMenu>
