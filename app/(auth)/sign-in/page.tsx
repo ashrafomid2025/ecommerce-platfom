@@ -23,7 +23,7 @@ export default async function Login({
 }) {
   const session = await auth();
   if (session) {
-    redirect("/");
+    return redirect("/");
   }
   return (
     <div className="w-full max-w-md mx-auto">
