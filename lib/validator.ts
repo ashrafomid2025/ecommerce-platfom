@@ -32,3 +32,22 @@ export const authValidationSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "The password must be at least 6 characters"),
 });
+// sechema for registering users
+export const signUpValidationSchema = z
+  .object({
+    name: z.string().min(3, "The name should be string and at least 3 chars"),
+    email: z.string().email("Invalid email address"),
+    password: z.string().min(6, "The password must be at least 6 characters"),
+    confirmPassword: z
+      .string()
+      .min(6, "The Confirm password must be at least 6 characters"),
+  })
+  .refine(
+    (data) => {
+      data.password === data.confirmPassword;
+    },
+    {
+      message: "Passwords not matched",
+      path: ["confirmPassword"],
+    },
+  );
