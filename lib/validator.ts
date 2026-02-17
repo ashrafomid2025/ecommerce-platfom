@@ -22,3 +22,17 @@ export const authValidationSchema = z.object({
     email: z.string().email("Invalid email address"),
     password: z.string().min(6,"The password must be at least 6 characters.")
 })
+
+
+// signing up validation
+export const signUpValidationSchema = z.object({
+    name: z.string().min(3,"The name should be at least 3 characters."),
+    email: z.string().email("Invalid email address"),
+    password: z.string().min(6,"The password must be at least 6 characters."),
+    confirmPassword: z.string().min(6,"The confirm password must be at least 6 characters.")
+}).refine((data)=>{
+    data.password === data.confirmPassword
+},{
+    message: "Passwords are not matched",
+    path: ["confirmPassword"]
+})
