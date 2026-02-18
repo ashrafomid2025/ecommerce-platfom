@@ -42,12 +42,7 @@ export const signUpValidationSchema = z
       .string()
       .min(6, "The Confirm password must be at least 6 characters"),
   })
-  .refine(
-    (data) => {
-      data.password === data.confirmPassword;
-    },
-    {
-      message: "Passwords not matched",
-      path: ["confirmPassword"],
-    },
-  );
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "passwords not matched",
+    path: ["confirmPassword"],
+  });

@@ -2,9 +2,9 @@
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { authValidationSchema, signUpValidationSchema } from "../validator";
 import { hashSync } from "bcrypt-ts-edge";
-import { signIn, signOut, auth } from "@/auth";
+import { signIn, signOut } from "@/auth";
 import { prisma } from "../db/lib";
-import { success } from "zod";
+
 export async function signUpUser(prevState: unknown, formData: FormData) {
   try {
     const user = signUpValidationSchema.parse({

@@ -27,7 +27,7 @@ async function UserButton() {
     <div className="flex gap-2 items-center">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className="flex  items-center">
+          <div className="flex items-center">
             <Button
               variant="ghost"
               className="relative ml-2 w-8 h-8 rounded-full bg-gray-200 flex justify-center items-center"
