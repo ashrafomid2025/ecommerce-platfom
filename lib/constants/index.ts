@@ -5,4 +5,10 @@ export const PRODUCT_LIMIT = process.env.PUBLIC_NEXT_APP_LIMIT || 4;
 export const signInDefaultValue = {
     email: "",
     password: ""
+};
+export const signUpDefaultValue = {
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
 }

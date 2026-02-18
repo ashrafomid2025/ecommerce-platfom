@@ -40,8 +40,8 @@ function SignInWithCredentialForm() {
                     {data.message}
                 </div>
             )}
-            <div className='text-center text-foreground-muted font-light text-sm'>
-                Don't have an accont? <Link href="/sign-up">Create One</Link>
+            <div className='text-center text-foreground-muted text-sm'>
+                Don't have an accont? <Link href="/sign-up" className='link'>Sign Up</Link>
             </div>
         </div>
     </form>

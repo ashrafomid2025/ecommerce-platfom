@@ -4,7 +4,6 @@ import { authValidationSchema, signUpValidationSchema } from "../validator";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { hashSync } from "bcrypt-ts-edge";
 import { prisma } from "../db";
-import { success } from "zod";
 
 export async function signUpUser(prevstate: unknown, formData: FormData){
     try{

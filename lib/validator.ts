@@ -31,7 +31,7 @@ export const signUpValidationSchema = z.object({
     password: z.string().min(6,"The password must be at least 6 characters."),
     confirmPassword: z.string().min(6,"The confirm password must be at least 6 characters.")
 }).refine((data)=>{
-    data.password === data.confirmPassword
+   return data.password === data.confirmPassword
 },{
     message: "Passwords are not matched",
     path: ["confirmPassword"]

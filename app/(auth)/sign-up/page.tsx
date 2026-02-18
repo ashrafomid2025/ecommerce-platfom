@@ -1,5 +1,5 @@
 import { auth } from '@/auth'
-import SignInWithCredentialForm from '@/components/crendential-signin-form'
+import SignUpForm from '@/components/sign-up-form'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { APP_NAME } from '@/lib/constants'
 import { Metadata } from 'next'
@@ -9,7 +9,7 @@ import { redirect } from 'next/navigation'
 import React from 'react'
 
 export const metadata:Metadata = {
-    title: "Sign In",
+    title: "Sign Up",
 }
 
 async function Login() {
@@ -24,14 +24,14 @@ async function Login() {
                 <Link href="/" className='w-full flex justify-center'>
                 <Image src="images/logo.svg" alt={APP_NAME} height={100} width={100} />
                 </Link>
-                <CardTitle className='text-center'>Sign In</CardTitle>
+                <CardTitle className='text-center'>Sign Up</CardTitle>
                 <CardDescription className='text-center'>
-                    Sign in with email and password
+                   Insert the information below to sign up
                 </CardDescription>
             </CardHeader>
             <CardContent>
                 {/* input */}
-                <SignInWithCredentialForm />
+                <SignUpForm />
             </CardContent>
         </Card>
     </div>
