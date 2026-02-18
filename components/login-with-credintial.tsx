@@ -6,6 +6,7 @@ import { Button } from './ui/button'
 import { useActionState } from 'react'
 import { useFormStatus } from 'react-dom'
 import { signInuserWithCredentiols } from '@/lib/action/auth.action'
+import Link from 'next/link'
 function SignInButton(){
     const {pending} = useFormStatus();
     return(
@@ -24,7 +25,7 @@ function LoginwithCredintal() {
     {}
   return (
     <form action={action}>
-        <div className=' space-y-1'>
+        <div className=' space-y-4 flex flex-col '>
             <div className='space-y-1'>
                 <Label htmlFor='email'>Email</Label>
                 <Input id='email' type='email'  name='email' autoCapitalize='email' defaultValue={signInDefaultValue.email} />
@@ -34,6 +35,7 @@ function LoginwithCredintal() {
                 <Input id='password' type='password'  name='password' autoCapitalize='password' defaultValue={signInDefaultValue.password} />
             </div>
             <SignInButton />
+            <h1 className=' text-center font-medium'>Dont You Have In Account? <Link href="/sign-up">Sign Up</Link> </h1>
             {/* button */}
             {data && !data.success && (
                 <div className='text-center text-destructive'>{data.message}</div>

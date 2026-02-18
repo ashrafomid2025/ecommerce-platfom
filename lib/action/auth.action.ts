@@ -1,18 +1,18 @@
 "use server"
-import { authValidationScema, signUpUser } from "../validator";
+import { authValidationScema, signUpUserValidet } from "../validator";
 import { signIn, signOut , auth } from "@/auth";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { hashSync } from "bcrypt-ts-edge";
 import { prisma } from "../db/lib";
 export async function signUpuser(prevState:unknown , formData:FormData){
     try{
-        const user = signUpUser.parse({
+        const user = signUpUserValidet.parse({
         name: formData.get('name'),
         email:formData.get("email"),
         password: formData.get("password"),
-        confermPassword: formData.get("confermPassword"),
+        confirmPassword: formData.get("confirmPassword"),
     });
-    const passwordEncrept = hashSync(user.ConfermPassword , 10);
+    const passwordEncrept = hashSync(user.confirmPassword , 10);
     await prisma.user.create({
         data:{
             name: user.name,

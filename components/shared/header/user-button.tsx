@@ -1,4 +1,4 @@
-import { DropdownMenu , DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { DropdownMenu , DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { auth } from '@/auth'
 import { Button } from '@/components/ui/button';
 import { UserIcon } from 'lucide-react';
@@ -17,25 +17,28 @@ async function UserButton() {
     }
     const firstLetterOfName = session.user?.name?.charAt(0).toLocaleUpperCase();
   return (
-    <div className='flex gap-2 items-center'>
+    <div className='flex gap-2 items-center '>
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <div className='flex justify-center items-center'>
                     <Button variant="ghost" className='flex justify-center items-center relative h-8 w-8  rounded-full bg-gray-200'>{firstLetterOfName}</Button>
                 </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
-                <DropdownMenuLabel className='flex flex-col gap-2'>
-                    <div className='font-medium '>
+            <DropdownMenuContent className='w-56' align='end' forceMount >
+                <DropdownMenuLabel className='font-normal'>
+                    <div className='font-medium  text-sm leading-none'>
                         {session.user?.name}
                     </div>
-                    <div className='text-sm text-muted-foreground'>
+                    <div className='text-sm text-muted-foreground leading-none'>
                         {session.user?.email}
                     </div>
-                    <form action={signOutuser}>
-                        <Button type='submit' variant="ghost">Sign Out</Button>
-                    </form>
+                   
                 </DropdownMenuLabel>
+                <DropdownMenuItem  className='p-0 mb-1'>
+                     <form action={signOutuser} className='w-full'>
+                        <Button type='submit' variant="ghost" className='w-full py-4 px-2 h-4 justify-start'>Sign Out</Button>
+                    </form>
+                </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
     </div>

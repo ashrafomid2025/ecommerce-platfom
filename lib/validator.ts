@@ -15,14 +15,12 @@ export const authValidationScema = z.object({
     password: z.string().min(6,'The password must be at least 6 characters'),
 })
 // schema for user sign up
-export const signUpUser = z.object({
+export const signUpUserValidet = z.object({
     name: z.string().min(3, "The name should be string and at lest 3 chers"),
     email: z.string().email('Invalid email address'),
     password: z.string().min(6,'The password must be at least 6 characters'),
-    ConfermPassword: z.string().min(6,'The ConfermPassword must be at least 6 characters'),
-}).refine((data)=> {
-    data.password === data.ConfermPassword;
-},{
-    message: "password not matched",
+    confirmPassword: z.string().min(6,'The ConfermPassword must be at least 6 characters'),
+}).refine((data)=> data.password === data.confirmPassword , {
+    message: "passwords not matche",
     path: ["confirmPassword"],
 })
