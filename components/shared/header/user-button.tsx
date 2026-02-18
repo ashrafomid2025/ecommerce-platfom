@@ -5,6 +5,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
   DropdownMenuContent,
+  DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { signOutUser } from "@/lib/action/auth.action";
 import { Button } from "@/components/ui/button";
@@ -21,34 +22,44 @@ async function UserButton() {
       </Button>
     );
   }
-  const firstLetterOfName = session.user?.name?.charAt(0).toUpperCase() || "";
+  const firstLetterOfName = session.user?.name?.charAt(0).toUpperCase() || "U";
   return (
     <div className="flex gap-2 items-center">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className="flex justify-center items-center">
+          <div className="flex  items-center">
             <Button
               variant="ghost"
-              className="relative w-8 h-8 rounded-full bg-gray-200 flex justify-center items-center"
+              className="relative ml-2 w-8 h-8 rounded-full bg-gray-200 flex justify-center items-center"
             >
               {firstLetterOfName}
             </Button>
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel className="flex flex-col gap-2">
-            <div className="font-medium">{session.user?.name}</div>
-            <div className="text-sm text-muted-foreground">
-              {session.user?.email}
+        <DropdownMenuContent className="w-56 " align="end" forceMount>
+          <DropdownMenuLabel className="font-normal">
+            <div className="flex flex-col space-y-1">
+              <div className="font-medium text-sm leading-none">
+                {session.user?.name}
+              </div>
+              <div className="text-sm text-muted-foreground leading-none">
+                {session.user?.email}
+              </div>
             </div>
+          </DropdownMenuLabel>
+          <DropdownMenuItem className="p-0 mb-1">
             <div>
-              <form action={signOutUser}>
-                <Button type="submit" variant="ghost">
+              <form action={signOutUser} className="w-full">
+                <Button
+                  type="submit"
+                  variant="ghost"
+                  className="w-full py-4 px-2 h-4 justify-start"
+                >
                   Sign Out
                 </Button>
               </form>
             </div>
-          </DropdownMenuLabel>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
