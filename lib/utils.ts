@@ -20,17 +20,14 @@ export function priceConverter(value: number): string {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function formatError(error: any) {
   if (error.name === "ZodError") {
-    const fieldErrors = error.issues.map((err: any) => err.message);
-    return fieldErrors.join(". ");
+    const messages = error.issues.map((er: any) => er.message);
+    return messages.join(". ");
   } else if (
     error.name === "PrismaClientKnownRequestError" &&
     error.code === "P2002"
   ) {
-    const field = "Email already have been used";
-    return field;
-    // prisma error
+    return "Email has already been taken";
   } else {
-    // handle other error
-    return "Something Went Wrong, please check your internet connection";
+    return "Please check your internet connection and try again";
   }
 }
