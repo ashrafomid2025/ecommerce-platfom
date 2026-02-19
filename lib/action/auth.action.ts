@@ -4,6 +4,7 @@ import { authValidationSchema, signUpValidationSchema } from "../validator";
 import { hashSync } from "bcrypt-ts-edge";
 import { signIn, signOut } from "@/auth";
 import { prisma } from "../db/lib";
+import { formatError } from "../utils";
 
 export async function signUpUser(prevState: unknown, formData: FormData) {
   try {
@@ -30,13 +31,13 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
       success: true,
       message: "user created and signed in successfully",
     };
-  } catch (err) {
-    if (isRedirectError(err)) {
-      throw err;
+  } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
     }
     return {
       success: false,
-      message: "something went wrong",
+      message: formatError(error),
     };
   }
 }
