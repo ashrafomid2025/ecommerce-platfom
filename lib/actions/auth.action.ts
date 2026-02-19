@@ -4,6 +4,7 @@ import { authValidationSchema, signUpValidationSchema } from "../validator";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { hashSync } from "bcrypt-ts-edge";
 import { prisma } from "../db";
+import { formatError } from "../utils";
 
 export async function signUpUser(prevstate: unknown, formData: FormData){
     try{
@@ -31,13 +32,16 @@ export async function signUpUser(prevstate: unknown, formData: FormData){
             message: "user created and signed in successfully"
         }
     }
-    catch(err){
-        if(isRedirectError(err)){
-                throw err;
+    catch(error){
+        // console.log(error.name);
+        // console.log(error.code);
+        // console.log(error.issue);
+        if(isRedirectError(error)){
+                throw error;
         }
         return {
             success: false,
-            message: "Something went wrong"
+            message: formatError(error),
         };
     }
 }
@@ -55,8 +59,8 @@ export async function signInUsersWithCredentials(prevstate : unknown, formData: 
         });
         return {success: true, message: 'user logged in successfully'}
     }
-    catch(err){
-        if(isRedirectError(err)) throw err;
+    catch(error){
+        if(isRedirectError(error)) throw error;
         return {success: false, message: 'Invalid email or password'}
     }
 }
