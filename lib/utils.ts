@@ -21,7 +21,7 @@ export function priceConverter(value: number): string {
 export function formatError(error: any) {
   if (error.name === "ZodError") {
     const messages = error.issues.map((er: any) => er.message);
-    return messages.join(". ");
+    return messages;
   } else if (
     error.name === "PrismaClientKnownRequestError" &&
     error.code === "P2002"
