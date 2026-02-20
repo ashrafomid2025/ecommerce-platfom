@@ -15,3 +15,16 @@ export function priceConverter(value: number):string{
   return `${int} . ${float? float : float.padEnd(2, '0')}`;
 
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function formatError(error: any){
+  if(error.name === "ZodError"){
+    const feilds = error.issues.map((err:any)=> err.message);
+    return feilds.join('. ');
+  }
+  else if(error.name === "PrismaClientKnownRequestError" && error.code === "P2002"){
+    return "Email has already been taken"
+  }
+  else{
+    return "Please check your internet connection and try again";
+  }
+}

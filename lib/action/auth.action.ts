@@ -4,6 +4,7 @@ import { signIn, signOut , auth } from "@/auth";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { hashSync } from "bcrypt-ts-edge";
 import { prisma } from "../db/lib";
+import { formatError } from "../utils";
 export async function signUpuser(prevState:unknown , formData:FormData){
     try{
         const user = signUpUserValidet.parse({
@@ -31,7 +32,10 @@ export async function signUpuser(prevState:unknown , formData:FormData){
         if(isRedirectError(err)){
             throw err;
         }
-        return {success: false , message: "somting went wrong",}
+        return {
+            success: false ,
+            message: formatError(err),
+        }
     }
 }
 // function sign up endded
