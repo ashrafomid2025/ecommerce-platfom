@@ -48,6 +48,8 @@ export const authConfig = {
   callbacks: {
     async session({ session, user, trigger, token }: any) {
       session.user.id = token.sub;
+
+      console.log(token.sub);
       if (trigger === "update") {
         session.user.name = user.name;
       }
