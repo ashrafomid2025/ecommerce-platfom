@@ -51,7 +51,7 @@ export const authConfig = {
       session.user.role = token.role;
       session.user.name = token.name;
 
-      console.log(token);
+      // console.log(token);
       if (trigger === "update") {
         session.user.name = user.name;
       }
