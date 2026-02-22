@@ -51,6 +51,7 @@ export const authConfig = {
       session.user.id = token.sub;
       session.user.name = token.name;
       session.user.role = token.role;
+      // user.role was added
 
       if (trigger === "update") {
         session.user.name = user.name;
