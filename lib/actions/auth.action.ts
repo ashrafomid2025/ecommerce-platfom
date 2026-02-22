@@ -6,7 +6,7 @@ import { hashSync } from "bcrypt-ts-edge";
 import { prisma } from "../db";
 import { formatError } from "../utils";
 
-export async function signUpUser(prevstate: unknown, formData: FormData){
+export async function signUpUser(prevState: unknown, formData: FormData){
     try{
         const user = signUpValidationSchema.parse({
             name: formData.get("name"),
@@ -46,7 +46,7 @@ export async function signUpUser(prevstate: unknown, formData: FormData){
     }
 }
 
-export async function signInUsersWithCredentials(prevstate : unknown, formData: FormData){
+export async function signInUsersWithCredentials(prevState : unknown, formData: FormData){
     try{
         const user = authValidationSchema.parse({
             email: formData.get("email"),

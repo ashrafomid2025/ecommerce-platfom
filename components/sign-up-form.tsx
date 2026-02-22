@@ -5,7 +5,6 @@ import { Label } from './ui/label';
 import { Input } from './ui/input';
 import { signUpDefaultValue } from '@/lib/constants';
 import { signUpUser } from '@/lib/actions/auth.action';
-import { success } from 'zod';
 import { Button } from './ui/button';
 import Link from 'next/link';
 

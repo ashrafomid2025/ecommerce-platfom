@@ -45,6 +45,7 @@ export const authConfig = {
     callbacks: {
         async session({session, user, trigger, token}:any){
             session.user.id = token.sub;
+            console.log(token.sub);
             return session
         }
     }

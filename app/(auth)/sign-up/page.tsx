@@ -12,7 +12,7 @@ export const metadata:Metadata = {
     title: "Sign Up",
 }
 
-async function Login() {
+async function SignUp() {
     const session = await auth();
     if(session){
       return  redirect("/");
@@ -38,4 +38,4 @@ async function Login() {
   )
 }
 
-export default Login
+export default SignUp
