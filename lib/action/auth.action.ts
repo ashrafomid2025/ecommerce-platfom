@@ -49,7 +49,7 @@ export async function signInuserWithCredentiols(prevState:unknown , formData: Fo
         await signIn('credentials' , {
             email: user.email,
             password: user.password,
-            redirect: false,
+            redirect: true,
         })
         return {success: true, message: 'user logged In successfuly'}
     }
