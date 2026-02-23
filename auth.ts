@@ -45,10 +45,31 @@ export const authConfig = {
     callbacks: {
         async session({session, user, trigger, token}:any){
             session.user.id = token.sub;
-            console.log(token.sub);
+            session.user.name = token.name;
+            session.user.role = token.role;
+            console.log(token);
+            if(trigger === "update"){
+                session.user.name = user.name;
+            }
             return session
+        },
+        async jwt({session,user,trigger,token}:any){
+            if(user){
+            token.role = user.role
+            // If the is provider google
+            if(user.name === "NO_NAME"){
+                token.name = user.email!.split('@')[0];
+                await prisma.user.update({
+                    where: {
+                        id : user.id
+                    },
+                    data: {name: token.name}
+                });
+            }
         }
-    }
+            return token;
+        }
+    },
 
 } satisfies NextAuthConfig;
 export const { handlers, auth, signIn, signOut } = NextAuth(authConfig);
