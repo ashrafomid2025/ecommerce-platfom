@@ -42,7 +42,6 @@ export const authConfig = {
           }
         }
         return null;
-        // create databse mydb character set utf8 collate utf8_general_ci
       },
     }),
   ],
