@@ -25,6 +25,7 @@ export async function InsertProductAction(
   prevState: unknown,
   formData: FormData,
 ) {
+  // middleware.ts=> runtime edge
   try {
     const product = productInsertSchema.parse({
       name: formData.get("name"),
@@ -32,28 +33,31 @@ export async function InsertProductAction(
       category: formData.get("category"),
       description: formData.get("description"),
       brand: formData.get("brand"),
-      banner: formData.get("banner"),
+
       price: formData.get("price"),
       stock: formData.get("stock"),
       isFeatured: formData.get("isFeatured"),
     });
+
     const image1 = formData.get("image1") as File;
     const image2 = formData.get("image2") as File;
+
     if (!image1 || !image2) {
-      return { error: "images are required" };
+      return { error: "Images are required" };
     }
-    const uploadDir = path.join(process.cwd(), "public/images/sample-products");
-    const image1Name = `${Date.now()}-${image1.name}`;
-    const image2Name = `${Date.now()}-${image2.name}`;
+
+    const image1Name = `${Date.now()}_${image1}`;
+    const image2Name = `${Date.now()}_${image2}`;
+    const uploadDir = path.join(process.cwd(), "public/images/sample-product");
 
     const image1Buffer = Buffer.from(await image1.arrayBuffer());
     const image2Buffer = Buffer.from(await image2.arrayBuffer());
 
     await writeFile(path.join(uploadDir, image1Name), image1Buffer);
     await writeFile(path.join(uploadDir, image2Name), image2Buffer);
-    const imageUrl = [
-      `images/sample-products/${image1Name}`,
-      `images/sample-products/${image2Name}`,
+    const imagesUrl = [
+      `public/images/sample-products/${image1Name}`,
+      `public/images/sample-products/${image2Name}`,
     ];
     await prisma.product.create({
       data: {
@@ -65,7 +69,7 @@ export async function InsertProductAction(
         banner: product.banner,
         price: product.price,
         stock: product.stock,
-        images: imageUrl,
+        images: imagesUrl,
         isFeatured: product.isFeatured,
       },
     });
