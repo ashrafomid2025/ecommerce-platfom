@@ -2,6 +2,7 @@ import { auth } from '@/auth'
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { signOutUser } from '@/lib/actions/auth.action';
+import { prisma } from '@/lib/db';
 import { UserCircle } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react'
@@ -9,6 +10,11 @@ import React from 'react'
 
 async function UserButton() {
     const session = await auth();
+    const user = await prisma.user.findFirst({
+        where: {
+            id: session?.user?.id
+        }
+    });
     if(!session){
         return (
             <Button asChild>
@@ -32,6 +38,20 @@ async function UserButton() {
                     {session.user?.name}
                 </div>
                 <div className="text-sm text-muted-foreground leading-none">{session.user?.email}</div>
+                {user?.role === "admin" && (
+                    <div className='flex justify-between flex-wrap'>
+                        <div>
+                            <Link href="/admin/insertproduct" className='text-sm leading-none link'>
+                            <Button variant="outline">Add Product</Button>
+                            </Link>
+                        </div>
+                        <div>
+                            <Link href="/admin/allProducts" className='text-sm leading-none link'>
+                            <Button variant="ghost">All Products</Button>
+                            </Link>
+                        </div>
+                    </div>
+                )}
                 </div>
             </DropdownMenuLabel>
             <DropdownMenuItem className='p-0 mb-1'>

@@ -12,3 +12,21 @@ export const signUpDefaultValue = {
     password: "",
     confirmPassword: ""
 }
+
+export const productDefaultValue = {
+    name: "",
+    slug: "",
+    category: "",
+    description: "",
+    brand: "",
+    rating: "",
+    price: "",
+    stock: "",
+    isfeatured: "",
+    // banner: "",
+    numReviews: "",
+    images: [
+        "",
+        ""
+    ],
+}

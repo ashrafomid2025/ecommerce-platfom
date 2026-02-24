@@ -55,7 +55,7 @@ export const authConfig = {
         },
         async jwt({session,user,trigger,token}:any){
             if(user){
-            token.role = user.role
+            token.role = user.role;
             // If the is provider google
             if(user.name === "NO_NAME"){
                 token.name = user.email!.split('@')[0];
