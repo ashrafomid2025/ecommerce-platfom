@@ -1,9 +1,11 @@
 "use server";
 
+import { writeFile } from "fs/promises";
 import { PRODUCT_LIMIT } from "../constants";
 import { prisma } from "../db/lib";
 import { convertToPlainObject } from "../utils";
 import { productInsertSchema } from "../validator";
+import path from "path";
 
 export async function getLatestProducts() {
   const data = await prisma.product.findMany({
@@ -35,6 +37,24 @@ export async function InsertProductAction(
       stock: formData.get("stock"),
       isFeatured: formData.get("isFeatured"),
     });
+    const image1 = formData.get("image1") as File;
+    const image2 = formData.get("image2") as File;
+    if (!image1 || !image2) {
+      return { error: "images are required" };
+    }
+    const uploadDir = path.join(process.cwd(), "public/images/sample-products");
+    const image1Name = `${Date.now()}-${image1.name}`;
+    const image2Name = `${Date.now()}-${image2.name}`;
+
+    const image1Buffer = Buffer.from(await image1.arrayBuffer());
+    const image2Buffer = Buffer.from(await image2.arrayBuffer());
+
+    await writeFile(path.join(uploadDir, image1Name), image1Buffer);
+    await writeFile(path.join(uploadDir, image2Name), image2Buffer);
+    const imageUrl = [
+      `images/sample-products/${image1Name}`,
+      `images/sample-products/${image2Name}`,
+    ];
     await prisma.product.create({
       data: {
         name: product.name,
@@ -45,6 +65,7 @@ export async function InsertProductAction(
         banner: product.banner,
         price: product.price,
         stock: product.stock,
+        images: imageUrl,
         isFeatured: product.isFeatured,
       },
     });
