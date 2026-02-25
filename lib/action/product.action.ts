@@ -75,10 +75,8 @@ export async function InsertProductAction(
       },
     });
     // url
-    console.log("poduct added");
-    return { success: true, message: "product added" };
+    return { success: true, message: "product added success" };
   } catch (err) {
-    console.error(err);
-    return { success: false, message: "something went wrong" };
+    return { success: false, message: "Product not added" };
   }
 }
