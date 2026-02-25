@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import ProductForm from "@/components/shared/products/insert-form";
 import { prisma } from "@/lib/db/lib";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -11,7 +12,11 @@ async function InsertPage() {
       where: { id: id },
     });
     if (user?.role === "admin") {
-      return <div>welcome to the admin page</div>;
+      return (
+        <div>
+          <ProductForm />
+        </div>
+      );
     } else {
       return redirect("/");
     }
