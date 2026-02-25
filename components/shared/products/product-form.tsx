@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -6,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import React from "react";
 
 function ProductForm() {
@@ -49,7 +51,14 @@ function ProductForm() {
             <Input type="file" name="image2" accept="image/*" />
           </div>
         </div>
-        <div></div>
+        <div>
+          <Textarea className="w-full h-full resize-none" />
+        </div>
+      </div>
+      <div>
+        <Button type="submit" variant="outline">
+          Save
+        </Button>
       </div>
     </form>
   );
