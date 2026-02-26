@@ -17,7 +17,7 @@ import { redirect } from "next/navigation";
 function ProductForm() {
   const [data, action] = useActionState(InsertProductAction, {
     success: false,
-    message: "",
+    message: "something",
   });
   if (data && data.success) {
     return redirect("/");
