@@ -19,8 +19,10 @@ async function InsertPage() {
             {/* <h1 className="font-bold absolute top-4 left-1/2 -translate-x-1/2 text-center">
               Add Product
             </h1> */}
-            <h1 className="leading-none font-bold text-3xl">Add Product</h1>
-            <p className="text-muted-foreground text-sm">
+            <h1 className="leading-none font-bold text-xl lg:text-3xl md:text-2xl">
+              Add Product
+            </h1>
+            <p className="text-muted-foreground text-sm text-center">
               products that worth sharing, attract customers
             </p>
             <img

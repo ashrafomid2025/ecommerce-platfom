@@ -6,6 +6,7 @@ import { prisma } from "../db/lib";
 import { convertToPlainObject } from "../utils";
 import { productInsertSchema } from "../validator";
 import path from "path";
+// import { redirect } from "next/navigation";
 
 export async function getLatestProducts() {
   const data = await prisma.product.findMany({
@@ -76,6 +77,7 @@ export async function InsertProductAction(
     });
     // url
     return { success: true, message: "product added success" };
+    // return redirect("/");
   } catch (err) {
     return { success: false, message: "Product not added" };
   }

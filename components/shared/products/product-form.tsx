@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -7,18 +8,28 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useActionState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import React from "react";
+import { InsertProductAction } from "@/lib/action/product.action";
+import { redirect } from "next/navigation";
 
 function ProductForm() {
+  const [data, action] = useActionState(InsertProductAction, {
+    success: false,
+    message: "",
+  });
+  if (data && data.success) {
+    return redirect("/");
+  }
   return (
-    <form className="flex flex-col gap-2">
+    <form action={action} className="flex flex-col gap-2">
       <div className="grid gap-1 grid-cols-2">
         <Input type="text" name="name" placeholder="Product Name" />
         <Input type="text" name="slug" placeholder="Product slug" />
       </div>
       <div className="grid gap-1 grid-cols-2">
-        <Input type="number" name="price" placeholder="Product Price" />
+        <Input type="text" name="price" placeholder="Product Price" />
         <Input type="number" name="stock" placeholder="Product Stock" />
       </div>
       <div className="grid gap-1 grid-cols-2">
@@ -45,21 +56,22 @@ function ProductForm() {
       </div>
       <div className="grid grid-cols-2 gap-1">
         <div className="w-full flex flex-col gap-2">
-          <Input type="text" placeholder="Product brand" />
+          <Input name="brand" type="text" placeholder="Product brand" />
           <div className="flex justify-between gap-2 flex-wrap">
             <Input type="file" name="image1" accept="image/*" />
             <Input type="file" name="image2" accept="image/*" />
           </div>
         </div>
         <div>
-          <Textarea className="w-full h-full resize-none" />
+          <Textarea name="description" className="w-full h-full resize-none" />
         </div>
       </div>
       <div>
-        <Button type="submit" variant="outline">
+        <Button type="submit" variant="default">
           Save
         </Button>
       </div>
+      {data && !data.success && <div>{data.message}</div>}
     </form>
   );
 }
