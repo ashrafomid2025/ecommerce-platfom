@@ -29,7 +29,7 @@ export async function insertProductAction(prevState: unknown, formData: FormData
     try{
         // image insertion
         const image1 = formData.get("image1") as File;
-        const image2 = formData.get("image1") as File;
+        const image2 = formData.get("image2") as File;
 
         if(!image1 || !image2){
             return {error: "Images are required"}
@@ -37,8 +37,8 @@ export async function insertProductAction(prevState: unknown, formData: FormData
 
         const uploadDir = path.join(process.cwd(),"public/images/sample-products");
 
-        const image1Name = `${Date.now()}_${image1}`;
-        const image2Name = `${Date.now()}_${image2}`;
+        const image1Name = `${Date.now()}-${image1.name}`;
+        const image2Name = `${Date.now()}-${image2.name}`;
 
         const image1Buffer = Buffer.from(await image1.arrayBuffer());
         const image2Buffer = Buffer.from(await image2.arrayBuffer());
@@ -53,17 +53,17 @@ export async function insertProductAction(prevState: unknown, formData: FormData
         ];
 
         const product = ProductInsertSchema.parse({
-            name: formData.get("name"),
-            slug: formData.get("slug"),
-            category: formData.get("category"),
-            description: formData.get("description"),
-            brand: formData.get("brand"),
-            images: productImages,
-            stock: formData.get("stock"),
-            isFeatured: formData.get("isFeatured"),
-            price: formData.get("price"),
-        });
-        
+      name: formData.get("name"),
+      slug: formData.get("slug"),
+      category: formData.get("category"),
+      description: formData.get("description"),
+      brand: formData.get("brand"),
+      images: productImages,
+      price: formData.get("price"),
+      stock: formData.get("stock"),
+      isFeatured: formData.get("isFeatured") === "true",
+    });
+        console.log("product validated");
 
         await prisma.products.create({
             data: {
@@ -72,11 +72,10 @@ export async function insertProductAction(prevState: unknown, formData: FormData
                 category: product.category,
                 description: product.description,
                 brand: product.brand,
-                // banner: product.banner,
-                stock: product.stock,
-                isFeatured: product.isFeatured,
                 price: product.price,
-                images: productImages
+                stock: product.stock,
+                images: productImages,
+                isFeatured: product.isFeatured,
             }
         });
         return {success: true, message: "product added successfully"}

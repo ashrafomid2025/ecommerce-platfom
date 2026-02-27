@@ -22,9 +22,11 @@ async function InsertPage() {
             return (
                 // <div>Welcome to the admin page</div>
                 <div className='w-full grid grid-cols-1 md:grid-cols-3 border p-2 rounded-md shadow-2xs'>
-                    <div className='relative col-span-1'>
+                    <div className='relative col-span-1 flex flex-col items-center'>
                         {/* image */}
-                        <h1 className='font-bold text-center absolute top-4 left-1/2 -translate-x-1/2'>Add Product</h1>
+                        {/* <h1 className='font-bold text-center absolute top-4 left-1/2 -translate-x-1/2'>Add Product</h1> */}
+                        <h1 className='leading-none text-xl font-bold md:text-2xl lg:text-3xl'>Add Product</h1>
+                        <p className='text-muted-foreground text-center text-sm'>Products that worth sharing, attract customers</p>
                         <img src="/images/p-banner.png" className='object-cover w-full h-full' alt="" />
                     </div>
                     <div className='col-span-2'>

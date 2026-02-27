@@ -1,18 +1,28 @@
+"use client";
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import React from 'react'
+import { insertProductAction } from '@/lib/actions/products.actions'
+import { redirect } from 'next/navigation';
+import React, { useActionState } from 'react'
 
 function ProductForm() {
+    const [data, action] = useActionState(insertProductAction,{
+        success: false,
+        message: ""
+    });
+    if(data && data.success){
+        return redirect('/');
+    }
   return (
-    <form action="" className='flex flex-col gap-2'>
+    <form action={action} className='flex flex-col gap-2'>
       <div className='grid gap-1 grid-cols-2'>
         <Input type='text' name='name' placeholder='Product Name' />
         <Input type='text' name='slug' placeholder='Product slug' />
       </div>
       <div className='grid gap-1 grid-cols-2'>
-        <Input type='number' name='price' placeholder='Product Price' />
+        <Input type='text' name='price' placeholder='Product Price' />
         <Input type='number' name='stock' placeholder='Product Stock' />
       </div>
       <div className='grid gap-1 grid-cols-2'>
@@ -46,9 +56,14 @@ function ProductForm() {
                 <Input type='file' name='image2' accept='image/*' />
             </div>
         </div>
-        <Textarea className='h-full resize-none' placeholder='Product Description' />
+        <Textarea className='h-full w-full resize-none' name='description' placeholder='Product Description' />
       </div>
-      <Button className='w-full'>Save</Button>
+      <div>
+      <Button type='submit' variant="default">Save</Button>
+      </div>
+      {data && !data.success && (
+        <div className='text-destructive text-center'>{data.message}</div>
+      )}
     </form>
   )
 }
