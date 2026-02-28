@@ -52,6 +52,8 @@ export async function insertProductAction(prevState: unknown, formData: FormData
             `/images/sample-products/${image2Name}`
         ];
 
+        // console.log(formData);
+
         const product = ProductInsertSchema.parse({
       name: formData.get("name"),
       slug: formData.get("slug"),
@@ -81,6 +83,7 @@ export async function insertProductAction(prevState: unknown, formData: FormData
         return {success: true, message: "product added successfully"}
     }
     catch(err){
+        console.log(err);
         return {success: false, message: "Could not add product"}
     }
 }

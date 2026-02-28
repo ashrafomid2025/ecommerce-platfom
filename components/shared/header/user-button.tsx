@@ -46,7 +46,7 @@ async function UserButton() {
                             </Link>
                         </div>
                         <div>
-                            <Link href="/admin/allProducts" className='text-sm leading-none link'>
+                            <Link href="/admin/allproducts" className='text-sm leading-none link'>
                             <Button variant="ghost">All Products</Button>
                             </Link>
                         </div>

@@ -26,7 +26,7 @@ function ProductForm() {
         <Input type='number' name='stock' placeholder='Product Stock' />
       </div>
       <div className='grid gap-1 grid-cols-2'>
-        <Select name='category'>
+        <Select name="category">
             <SelectTrigger className='w-full'>
                 <SelectValue placeholder="Select a category" />
             </SelectTrigger>
@@ -38,7 +38,7 @@ function ProductForm() {
             </SelectContent>
         </Select>
         {/* isFeatured */}
-        <Select name='isFeatured'>
+        <Select name="isFeatured">
             <SelectTrigger className='w-full'>
                 <SelectValue placeholder="Select Feature" />
             </SelectTrigger>
