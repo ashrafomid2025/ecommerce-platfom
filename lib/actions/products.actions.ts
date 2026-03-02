@@ -87,3 +87,15 @@ export async function insertProductAction(prevState: unknown, formData: FormData
         return {success: false, message: "Could not add product"}
     }
 }
+
+// Search Functionality
+export async function searchProduct(previousState: unknown, formData:FormData){
+    const name = formData.get("name") as string;
+    const filteredProducts = await prisma.products.findMany({
+        where:{
+            name: {contains: name}
+        },
+        orderBy: {name: "asc"}
+    });
+    return {success: true, data: filteredProducts};
+}

@@ -1,5 +1,6 @@
 import { auth } from '@/auth'
 import ProductTable from '@/components/shared/product/product-table';
+import SearchForm from '@/components/shared/product/search-form';
 import { prisma } from '@/lib/db';
 import { redirect } from 'next/navigation';
 import React from 'react'
@@ -14,6 +15,7 @@ import React from 'react'
         if(user?.role === "admin"){
             return (
                 <div>
+                    <SearchForm />
                     <ProductTable />
                 </div>
             )
