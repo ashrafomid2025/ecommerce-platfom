@@ -12,10 +12,10 @@ export function convertToPlainObject<T>(value:T):T{
 }
 
 export function priceConverter(value:number):string{
-  // const priceString = value.toString();
-  // const [int,float] = priceString.split(".");
-  // return float? `${int}. ${float?float:float.padEnd(2,"0")}`: `${int}.00`; 
-  return value.toFixed(2);
+  const priceString = value.toString();
+  const [int,float] = priceString.split(".");
+  return `${int}.${float?float:float.padEnd(2,"0")}`; 
+  // return value.toFixed(2);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

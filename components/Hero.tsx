@@ -7,12 +7,12 @@ import { CustomArrowProps } from "react-slick";
 
 function NextArrow(props:CustomArrowProps){
     const {className, style, onClick} = props;
-    return <div style={{...style, color: "black", right: "0",background : "transparent",borderRadius: "50%", padding: "0"}} className={className} onClick={onClick}></div>
+    return <div style={{...style, color: "black", right: "22px",background : "transparent",borderRadius: "50%", padding: "0"}} className={className} onClick={onClick}></div>
 }
 
 function PrevArrow(props:CustomArrowProps){
     const {className, style, onClick} = props;
-    return <div style={{...style, color: "black", zIndex: "30", left: "0" ,background : "transparent",borderRadius: "50%", padding: "0"}} className={className} onClick={onClick}></div>
+    return <div style={{...style, color: "black", zIndex: "30", left: "1px" ,background : "transparent",borderRadius: "50%", padding: "0"}} className={className} onClick={onClick}></div>
 }
 
 function Hero() {
@@ -27,7 +27,7 @@ function Hero() {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 2500,
     initialSlide: 1,
     responsive: [
       {
@@ -59,10 +59,10 @@ function Hero() {
     <div className=''>
       <Slider {...settings}>
         <div>
-            <Image className='object-cover w-full' src="/images/banner-1.jpg" alt='image' width={1000} height={1000} /> 
+            <Image className='object-cover rounded-xl w-full' src="/images/banner-1.jpg" alt='image' width={1000} height={1000} /> 
         </div>
         <div>
-            <Image className='object-cover w-full' src="/images/banner-2.jpg" alt='image' width={1000} height={1000} /> 
+            <Image className='object-cover rounded-xl w-full' src="/images/banner-2.jpg" alt='image' width={1000} height={1000} /> 
         </div>
       </Slider>
     </div>
