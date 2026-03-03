@@ -93,9 +93,15 @@ export async function searchProduct(
     where: {
       name: {
         contains: name,
+        mode: "insensitive",
       },
     },
     orderBy: { name: "asc" },
   });
-  return { success: true, data: filteredProduct };
+  const serializeProducts = filteredProduct.map((product) => ({
+    ...product,
+    price: Number(product.price),
+    rating: Number(product.rating),
+  }));
+  return { products: serializeProducts };
 }
