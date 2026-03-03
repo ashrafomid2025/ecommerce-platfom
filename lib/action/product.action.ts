@@ -82,3 +82,20 @@ export async function InsertProductAction(
     return { success: false, message: "Product not added" };
   }
 }
+
+// search Functionality
+export async function searchProduct(
+  previousState: unknown,
+  formData: FormData,
+) {
+  const name = formData.get("name") as string;
+  const filteredProduct = await prisma.product.findMany({
+    where: {
+      name: {
+        contains: name,
+      },
+    },
+    orderBy: { name: "asc" },
+  });
+  return { success: true, data: filteredProduct };
+}
