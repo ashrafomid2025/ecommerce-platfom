@@ -1,36 +1,58 @@
 "use client";
 import { Button } from '@/components/ui/button';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import Image from 'next/image';
 import { Input } from '@/components/ui/input'
-import { searchProduct } from '@/lib/actions/products.actions';
-import { Divide } from 'lucide-react';
 import Link from 'next/link';
-import React, { useActionState } from 'react'
+import React, { useActionState, useState } from 'react'
 import { useFormStatus } from 'react-dom';
 
-function SearchForm() {
-    const [ data, action ] = useActionState(searchProduct,{
-        success: false,
-        data: []
+function SearchForm({initialValue,action}:{initialValue:any[],action: any}) {
+    const [ data, func ] = useActionState(action,{
+        products: initialValue
     });
+    const [value, setValue] = useState("");
     const {pending} = useFormStatus();
   return (
-    <div className='w-full my-3 relative flex justify-center flex-col md:flex-row gap-0.5'>
-      <form className='flex justify-center items-center' action={action}>
-        <Input type='text' className='w-1/2' name='name' placeholder='What do you want' />
+    <div className='w-full my-3 relative flex  justify-center flex-col gap-0.5'>
+      <form className='flex w-full justify-center items-center' action={func}>
+        <Input value={value} onChange={(e)=> setValue(e.target.value)} type='text' className='w-1/2' name='name' placeholder='What do you want' />
         <Button variant="outline" type='submit' disabled={pending}>{pending?"Searching...":"Search"}</Button>
       </form>
-      <div className='absolute bg-white rounded-md shadow-2xl top-8 left-1/2 -translate-x-1/2 z-50'>
-        {data && data.data.length >0 && (
-            <div className='p-4 text-5xl font-bold text-green-400'>
-                {data.data.map(product => (
-                    <Link key={product.id} href="" className='link text-2xl font-bold'>
-                        {product.name}
-                    </Link>
-                ))}
-            {!data && <div>No Product exists with this name.</div>}
-            </div>
-        )}
-      </div>
+      <div className='p-4 overflow-x-auto'>
+    <Table>
+        <TableHeader className='bg-black px-2'>
+            <TableRow className='text-center'>
+                <TableHead className='text-white px-2'>Product Name</TableHead>
+                <TableHead className='text-white px-2'>Brand</TableHead>
+                <TableHead className='text-white px-2'>Price</TableHead>
+                <TableHead className='text-white px-2'>Image</TableHead>
+                <TableHead className='text-white px-2' colSpan={2}>Action</TableHead>
+            </TableRow>
+        </TableHeader>
+        <TableBody>
+            {data.products.map((product)=>(
+                <TableRow className='even:bg-gray-200' key={product.id}>
+                    <TableCell>{product.name}</TableCell>
+                    <TableCell>{product.brand}</TableCell>
+                    <TableCell>{product.price.toString()}</TableCell>
+                    <TableCell><Image src={product.images[0]} alt={product.name} height={100} width={100} /></TableCell>
+                    <TableCell><Button variant="destructive">Delete</Button></TableCell>
+                    <TableCell><Button variant="outline">Update</Button></TableCell>
+                </TableRow>
+            ))}
+            <TableRow>
+                <TableCell colSpan={5}>Total</TableCell>
+                <TableCell>{data.products.length}</TableCell>
+            </TableRow>
+        </TableBody>
+    </Table>
+            {data.products.length === 0 && (
+                <div className='text-center text-destructive text-xl'>
+                    {`${value} not found`}
+                </div>
+            )}
+    </div>
     </div>
   )
 }

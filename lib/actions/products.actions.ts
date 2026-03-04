@@ -93,9 +93,16 @@ export async function searchProduct(previousState: unknown, formData:FormData){
     const name = formData.get("name") as string;
     const filteredProducts = await prisma.products.findMany({
         where:{
-            name: {contains: name}
+            name: {contains: name,
+                mode: "insensitive"
+            }
         },
         orderBy: {name: "asc"}
     });
-    return {success: true, data: filteredProducts};
+    const serializeProducts = filteredProducts.map(product =>({
+        ...product,
+        price: Number(product.price),
+        rating: Number(product.rating)
+    }));
+    return {products: convertToPlainObject(filteredProducts)};
 }

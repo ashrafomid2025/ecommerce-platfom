@@ -1,6 +1,6 @@
 import { auth } from '@/auth'
-import ProductTable from '@/components/shared/product/product-table';
 import SearchForm from '@/components/shared/product/search-form';
+import { searchProduct } from '@/lib/actions/products.actions';
 import { prisma } from '@/lib/db';
 import { redirect } from 'next/navigation';
 import React from 'react'
@@ -13,10 +13,15 @@ import React from 'react'
             where: { id: id}
         });
         if(user?.role === "admin"){
+            const products = await prisma.products.findMany();
+            const serializeProducts = products.map(product => ({
+                ...product,
+                price: Number(product.price),
+                rating: Number(product.rating)
+            }));
             return (
-                <div>
-                    <SearchForm />
-                    <ProductTable />
+                <div className='w-full p-4'>
+                    <SearchForm  initialValue={serializeProducts} action={searchProduct}/>
                 </div>
             )
         }
