@@ -6,6 +6,9 @@ import { prisma } from "../db/lib";
 import { convertToPlainObject } from "../utils";
 import { productInsertSchema } from "../validator";
 import path from "path";
+import { revalidatePath } from "next/cache";
+// import { redirect } from "next/navigation";
+
 // import { redirect } from "next/navigation";
 
 export async function getLatestProducts() {
@@ -88,14 +91,15 @@ export async function searchProduct(
   previousState: unknown,
   formData: FormData,
 ) {
-  const name = formData.get("name") as string;
+  const term = formData.get("name") as string;
   const filteredProduct = await prisma.product.findMany({
     where: {
-      name: {
-        contains: name,
-        mode: "insensitive",
-      },
+      OR: [
+        { name: { contains: term, mode: "insensitive" } },
+        { brand: { contains: term, mode: "insensitive" } },
+      ],
     },
+
     orderBy: { name: "asc" },
   });
   const serializeProducts = filteredProduct.map((product) => ({
@@ -104,4 +108,20 @@ export async function searchProduct(
     rating: Number(product.rating),
   }));
   return { products: serializeProducts };
+}
+
+export async function deleteProduct(prevState: unknown, formdata: FormData) {
+  try {
+    const id = formdata.get("id") as string;
+
+    await prisma.product.delete({
+      where: { id: id },
+    });
+
+    return revalidatePath("admin/allproduct");
+    return { success: true };
+  } catch (err) {
+    console.log("something went wrong");
+    return { success: false };
+  }
 }
