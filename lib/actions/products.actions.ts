@@ -1,12 +1,13 @@
 "use server";
 
-import { mkdir, writeFile } from "fs/promises";
+import { mkdir, unlink, writeFile } from "fs/promises";
 import { PRODUCT_LIMIT } from "../constants";
 import { prisma } from "../db";
 import { convertToPlainObject } from "../utils";
 import { ProductInsertSchema } from "../validator";
 import path from "path";
 import { success } from "zod";
+import { revalidatePath } from "next/cache";
 
 export async function getLatestProducts(){
     const data = await prisma.products.findMany({
@@ -90,12 +91,13 @@ export async function insertProductAction(prevState: unknown, formData: FormData
 
 // Search Functionality
 export async function searchProduct(previousState: unknown, formData:FormData){
-    const name = formData.get("name") as string;
+    const term = formData.get("name") as string;
     const filteredProducts = await prisma.products.findMany({
         where:{
-            name: {contains: name,
-                mode: "insensitive"
-            }
+            OR:[
+                {name: {contains: term, mode: "insensitive"}},
+                {brand: {contains: term, mode: "insensitive"}},
+            ]
         },
         orderBy: {name: "asc"}
     });
@@ -105,4 +107,35 @@ export async function searchProduct(previousState: unknown, formData:FormData){
         rating: Number(product.rating)
     }));
     return {products: convertToPlainObject(filteredProducts)};
+}
+
+// Delete products
+export async function deleteProduct(prevState: unknown, formData: FormData){
+    try{
+    const id = formData.get("id") as string;
+
+    const product = await prisma.products.findUnique({
+        where: {id}
+    });
+
+    for(let imgPath of product?.images as []){
+        const fullImagePath = path.join(process.cwd(),"public",imgPath);
+        try{
+            await unlink(fullImagePath);
+        }
+        catch(err){
+            console.log("The images have already been deleted");
+        }
+    }
+
+
+    await prisma.products.delete({
+        where: {id: id}
+    });
+    return { success: true};
+}
+catch(err){
+    console.log(err);
+    return {success: false};
+}
 }

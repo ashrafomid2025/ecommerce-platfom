@@ -6,6 +6,8 @@ import { Input } from '@/components/ui/input'
 import Link from 'next/link';
 import React, { useActionState, useState } from 'react'
 import { useFormStatus } from 'react-dom';
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import DeleteButton from './delete-button';
 
 function SearchForm({initialValue,action}:{initialValue:any[],action: any}) {
     const [ data, func ] = useActionState(action,{
@@ -37,7 +39,23 @@ function SearchForm({initialValue,action}:{initialValue:any[],action: any}) {
                     <TableCell>{product.brand}</TableCell>
                     <TableCell>{product.price.toString()}</TableCell>
                     <TableCell><Image src={product.images[0]} alt={product.name} height={100} width={100} /></TableCell>
-                    <TableCell><Button variant="destructive">Delete</Button></TableCell>
+                    <TableCell>
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button variant="destructive">Delete</Button>
+                            </DialogTrigger>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>Deleting this item</DialogTitle>
+                                </DialogHeader>
+                                <DialogDescription>Do you want to delete this item?</DialogDescription>
+                                <DialogFooter className='space-x-4'>
+                                    <DialogClose>Cancel</DialogClose>
+                                    <DeleteButton id={product.id} />
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>
+                    </TableCell>
                     <TableCell><Button variant="outline">Update</Button></TableCell>
                 </TableRow>
             ))}
