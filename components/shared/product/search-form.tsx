@@ -8,6 +8,8 @@ import React, { useActionState, useState } from 'react'
 import { useFormStatus } from 'react-dom';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import DeleteButton from './delete-button';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 function SearchForm({initialValue,action}:{initialValue:any[],action: any}) {
     const [ data, func ] = useActionState(action,{
@@ -56,7 +58,66 @@ function SearchForm({initialValue,action}:{initialValue:any[],action: any}) {
                             </DialogContent>
                         </Dialog>
                     </TableCell>
-                    <TableCell><Button variant="outline">Update</Button></TableCell>
+                    <TableCell>
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button variant="outline">Update</Button>
+                            </DialogTrigger>
+                            <DialogContent>
+                                <DialogHeader className='flex flex-col items-center gap-4'>
+                                    <Image src="/images/logo.svg" alt={product.name} height={100} width={100} />
+                                    <DialogTitle className='text-center'>Edit product details</DialogTitle >
+                                </DialogHeader>
+                                <form className='flex flex-col gap-2'>
+                                    <div className='grid gap-1 grid-cols-2'>
+                       <Input type='text' value={product.name} name='name' placeholder='Product Name' />
+                       <Input type='text' value={product.slug} name='slug' placeholder='Product slug' />
+                     </div>
+                     <div className='grid gap-1 grid-cols-2'>
+                    <Input value={product.price} type='text' name='price' placeholder='Product Price' />
+                    <Input value={product.stock} type='number' name='stock' placeholder='Product Stock' />
+                    </div>
+                    <div className='grid gap-1 grid-cols-2'>
+                  <Select defaultValue={product.category} name="category">
+                      <SelectTrigger className='w-full'>
+                          <SelectValue aria-selected={product.category} placeholder="Select a category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                          <SelectItem value='clothes'>Clothes</SelectItem>
+                          <SelectItem value='cosmic items'>Cosmic Items</SelectItem>
+                          <SelectItem value='toilet items'>Toilet Items</SelectItem>
+                          <SelectItem value='shoes'>Shoes</SelectItem>
+                      </SelectContent>
+                  </Select>
+                  {/* isFeatured */}
+                  <Select defaultValue={product.isFeatured?"true":"false"} name="isFeatured">
+                      <SelectTrigger className='w-full'>
+                          <SelectValue placeholder="Select Feature" />
+                      </SelectTrigger>
+                      <SelectContent>
+                          <SelectItem value='true'>Featured</SelectItem>
+                          <SelectItem value='false'>Not Featured</SelectItem>
+                      </SelectContent>
+                  </Select>
+                </div>
+                <div className='grid grid-cols-2 gap-1'>
+                  <div className='w-full flex flex-col gap-2'>
+                      <Input type='text' value={product.brand} placeholder='Product Brand' name='brand' />
+                      <div className="flex justify-between gap-2 flex-wrap">
+                          <Input type='file' name='image1' accept='image/*' />
+                          <Input type='file' name='image2' accept='image/*' />
+                      </div>
+                  </div>
+                  <Textarea value={product.description} className='h-full w-full resize-none' name='description' placeholder='Product Description' />
+                </div>
+                                </form>
+                                <DialogFooter>
+                                    <DialogClose>Cancel</DialogClose>
+                                    <Button variant="secondary">Update</Button>
+                                </DialogFooter>
+                            </DialogContent>
+                        </Dialog>
+                    </TableCell>
                 </TableRow>
             ))}
             <TableRow>

@@ -10,7 +10,7 @@ function DeleteButton({id}:{id: any}) {
         success: false
     });
     if(data.success){
-        return redirect('admin/allproducts');
+        return redirect('/allproducts');
     }
     const [value, setValue] = useState(id);
   return (
