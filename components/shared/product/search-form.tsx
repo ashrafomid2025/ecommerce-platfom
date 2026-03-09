@@ -104,7 +104,7 @@ function SearchForm({
                     <DialogTrigger asChild>
                       <Button variant="outline">Update</Button>
                     </DialogTrigger>
-                    <DialogContent>
+                    <DialogContent className="w-[95vw] sm:max-w-lg md:max-w-4xl lg:max-w-5xl">
                       <DialogHeader className="flex flex-col items-center gap-4">
                         <Image
                           src="/images/logo.svg"
@@ -122,7 +122,6 @@ function SearchForm({
                       </DialogDescription>
                       <DialogFooter>
                         <DialogClose>Cancel</DialogClose>
-                        <Button variant="secondary">Update</Button>
                       </DialogFooter>
                     </DialogContent>
                   </Dialog>

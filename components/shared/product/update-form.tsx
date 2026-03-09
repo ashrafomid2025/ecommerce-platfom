@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useActionState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -18,47 +18,45 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { updateProduct } from "@/lib/actions/products.actions";
 
-function UpdateForm({
-  product,
-}: {
-  product: {
-    name: string;
-    slug: string;
-    category: string;
-    description: string;
-    brand: string;
-    price: number;
-    stock: number;
-    isFeatured: boolean;
-  };
-}) {
+function UpdateForm({ product }: { product: any }) {
+  const [data, action] = useActionState(updateProduct, {
+    message: "",
+  });
   return (
     <div>
-      <form className="flex flex-col gap-2">
+      <form action={action} className="flex flex-col gap-2">
         <div className="grid gap-1 grid-cols-2">
           <Input
             type="text"
-            value={product.name}
+            name="id"
+            className="hidden"
+            defaultValue={product.id}
+          />
+          <Input
+            type="text"
+            defaultValue={product.name}
             name="name"
             placeholder="Product Name"
           />
           <Input
             type="text"
-            value={product.slug}
+            defaultValue={product.slug}
             name="slug"
             placeholder="Product slug"
           />
         </div>
         <div className="grid gap-1 grid-cols-2">
           <Input
-            value={product.price}
+            defaultValue={product.price}
             type="text"
             name="price"
             placeholder="Product Price"
           />
           <Input
-            value={product.stock}
+            defaultValue={product.stock}
             type="number"
             name="stock"
             placeholder="Product Stock"
@@ -94,25 +92,27 @@ function UpdateForm({
           <div className="w-full flex flex-col gap-2">
             <Input
               type="text"
-              value={product.brand}
+              defaultValue={product.brand}
               placeholder="Product Brand"
               name="brand"
             />
-            <div className="flex justify-between gap-2 flex-wrap">
-              <Input type="file" name="image1" accept="image/*" />
-              <Input type="file" name="image2" accept="image/*" />
-            </div>
           </div>
-          <Textarea
-            value={product.description}
-            className="h-full w-full resize-none"
-            name="description"
-            placeholder="Product Description"
-          />
+          <div>
+            <Textarea
+              defaultValue={product.description}
+              className="h-28 w-full resize-none"
+              name="description"
+              placeholder="Product Description"
+            />
+          </div>
+        </div>
+        <div>
+          <Button variant="default" className="w-full">
+            Update
+          </Button>
         </div>
       </form>
     </div>
   );
 }
-
 export default UpdateForm;
