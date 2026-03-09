@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/dialog";
 import { DialogClose, DialogDescription } from "@radix-ui/react-dialog";
 import DeleteButton from "./delete-button";
+import UpdateForm from "./update-form";
 
 function SearchForm({
   initialValue,
@@ -109,7 +110,23 @@ function SearchForm({
                     </Dialog>
                   </TableCell>
                   <TableCell>
-                    <Button variant="outline">Update</Button>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button variant="default">Update</Button>
+                      </DialogTrigger>
+                      <DialogContent className=" w-[95vw] sm:max-w-lg md:max-w-4xl lg:max-w-5xl">
+                        <DialogHeader>
+                          <DialogTitle>Update a product</DialogTitle>
+                        </DialogHeader>
+                        <DialogDescription asChild>
+                          {/* update form */}
+                          <UpdateForm product={product} />
+                        </DialogDescription>
+                        <DialogFooter>
+                          <DialogClose>Cancel</DialogClose>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
                   </TableCell>
                 </TableRow>
               ))}

@@ -1,6 +1,6 @@
 "use server";
 
-import { writeFile, mkdir } from "fs/promises";
+import { writeFile, mkdir, unlink } from "fs/promises";
 import { PRODUCT_LIMIT } from "../constants";
 import { prisma } from "../db/lib";
 import { convertToPlainObject } from "../utils";
@@ -114,14 +114,46 @@ export async function deleteProduct(prevState: unknown, formdata: FormData) {
   try {
     const id = formdata.get("id") as string;
 
+    const product = await prisma.product.findUnique({
+      where: { id },
+    });
+    for (let imgPath of product?.images as string[]) {
+      const fullPath = path.join(process.cwd(), "public", imgPath);
+      try {
+        await unlink(fullPath);
+      } catch (err) {
+        console.log("the image has already been deleted");
+      }
+    }
+
     await prisma.product.delete({
       where: { id: id },
     });
 
-    return revalidatePath("admin/allproduct");
     return { success: true };
   } catch (err) {
-    console.log("something went wrong");
     return { success: false };
+  }
+}
+
+export async function updateProduct(prevState: unknown, formData: FormData) {
+  const id = formData.get("id") as string;
+  try {
+    await prisma.product.update({
+      where: { id },
+      data: {
+        name: formData.get("name") as string,
+        slug: formData.get("slug") as string,
+        category: formData.get("category") as string,
+        brand: formData.get("brand") as string,
+        price: Number(formData.get("price")),
+        description: formData.get("description") as string,
+        stock: Number(formData.get("stock")),
+        isFeatured: formData.get("isFeatured") === "TRUE" ? true : false,
+      },
+    });
+    return { message: "Product Updated Successfully" };
+  } catch (err) {
+    return { message: "Something went wrong" };
   }
 }
