@@ -170,7 +170,7 @@ export async function updateProduct(prevState: unknown, formData: FormData) {
         price: Number(formData.get("price")),
       },
     });
-    return { message: "product updated successfully" };
+    return { message: "Product Updated Successfully" };
   } catch (err) {
     return { message: "Something went wrong" };
   }

@@ -1,4 +1,4 @@
-import React, { useActionState } from "react";
+import React, { useActionState, useState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -20,11 +20,28 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { updateProduct } from "@/lib/actions/products.actions";
+import { toast } from "sonner";
+import Image from "next/image";
+import { X } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { redirect } from "next/navigation";
 
 function UpdateForm({ product }: { product: any }) {
   const [data, action] = useActionState(updateProduct, {
     message: "",
   });
+  const [showImage1, setShowImage1] = useState(true);
+  const [showImage2, setShowImage2] = useState(true);
+  {
+    data &&
+      data.message === "Product Updated Successfully" &&
+      toast.success("Product Updated Successfully");
+  }
+  {
+    data &&
+      data.message === "Something went wrong" &&
+      toast.error("Something went wrong");
+  }
   return (
     <div>
       <form action={action} className="flex flex-col gap-2">
@@ -96,18 +113,60 @@ function UpdateForm({ product }: { product: any }) {
               placeholder="Product Brand"
               name="brand"
             />
+            <div className="flex flex-wrap gap-2">
+              {!showImage1 && (
+                <Input type="file" name="image1" accept="image/*" />
+              )}
+              {!showImage2 && (
+                <Input type="file" name="image2" accept="image/*" />
+              )}
+              <div
+                className={cn(
+                  showImage1 ? "block relative" : "hidden relative",
+                )}
+              >
+                <X
+                  onClick={() => setShowImage1(!showImage1)}
+                  className="absolute top-0 right-0 hover:text-black"
+                  size={10}
+                />
+                <Image
+                  src={product.images[0]}
+                  alt="image1"
+                  height={80}
+                  width={80}
+                />
+              </div>
+              <div
+                className={cn(
+                  showImage2 ? "block relative" : "hidden relative",
+                )}
+              >
+                <X
+                  onClick={() => setShowImage2(!showImage2)}
+                  className="absolute top-0 right-0 hover:text-black"
+                  size={10}
+                />
+                <Image
+                  src={product.images[1]}
+                  alt="image2"
+                  height={80}
+                  width={80}
+                />
+              </div>
+            </div>
           </div>
           <div>
             <Textarea
               defaultValue={product.description}
-              className="h-28 w-full resize-none"
+              className="h-30 w-full resize-none"
               name="description"
               placeholder="Product Description"
             />
           </div>
         </div>
         <div>
-          <Button variant="default" className="w-full">
+          <Button type="submit" variant="default" className="w-full">
             Update
           </Button>
         </div>
