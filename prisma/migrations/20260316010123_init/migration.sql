@@ -26,7 +26,8 @@ CREATE TABLE "User" (
     "emailVerified" TIMESTAMP(3),
     "role" TEXT NOT NULL DEFAULT 'user',
     "image" TEXT,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "password" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -34,7 +35,7 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "Account" (
-    "userId" TEXT NOT NULL,
+    "userId" UUID NOT NULL,
     "type" TEXT NOT NULL,
     "provider" TEXT NOT NULL,
     "providerAccountId" TEXT NOT NULL,
@@ -54,7 +55,7 @@ CREATE TABLE "Account" (
 -- CreateTable
 CREATE TABLE "Session" (
     "sessionToken" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
+    "userId" UUID NOT NULL,
     "expires" TIMESTAMP(3) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL
@@ -67,6 +68,21 @@ CREATE TABLE "VerificationToken" (
     "expires" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "VerificationToken_pkey" PRIMARY KEY ("identifier","token")
+);
+
+-- CreateTable
+CREATE TABLE "Cart" (
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "userId" UUID,
+    "sessionCartId" TEXT NOT NULL,
+    "items" JSONB[] DEFAULT ARRAY[]::JSONB[],
+    "itemsPrice" DECIMAL(12,2) NOT NULL,
+    "totalPrice" DECIMAL(12,2) NOT NULL,
+    "shippingPrice" DECIMAL(12,2) NOT NULL,
+    "taxPrice" DECIMAL(12,2) NOT NULL,
+    "createAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Cart_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -83,3 +99,6 @@ ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId"
 
 -- AddForeignKey
 ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Cart" ADD CONSTRAINT "Cart_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

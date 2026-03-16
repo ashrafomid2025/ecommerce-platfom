@@ -138,6 +138,42 @@ export async function deleteProduct(prevState: unknown, formdata: FormData) {
 
 export async function updateProduct(prevState: unknown, formData: FormData) {
   const id = formData.get("id") as string;
+  const image1 = formData.get("image1") as File;
+  const image2 = formData.get("image2") as File;
+  if (image1 && image2) {
+    const urlOldImage1 = formData.get("oldimage1") as string;
+    const urlOldImage2 = formData.get("oldimage2") as string;
+
+    const fullPathForImage1 = path.join(process.cwd(), "public", urlOldImage1);
+    const fullPathForImage2 = path.join(process.cwd(), "public", urlOldImage2);
+    try {
+      await unlink(fullPathForImage1);
+      await unlink(fullPathForImage2);
+    } catch (err) {
+      console.log("the image has already been deleted");
+    }
+
+    const image1Name = `${Date.now()}-${image1.name}`;
+    const image2Name = `${Date.now()}-${image2.name}`;
+    const uploadDir = path.join(process.cwd(), "public/images/sample-products");
+
+    const image1Buffer = Buffer.from(await image1.arrayBuffer());
+    const image2Buffer = Buffer.from(await image2.arrayBuffer());
+
+    await mkdir(uploadDir, { recursive: true });
+    await writeFile(path.join(uploadDir, image1Name), image1Buffer);
+    await writeFile(path.join(uploadDir, image2Name), image2Buffer);
+    const imagesUrl = [
+      `/images/sample-products/${image1Name}`,
+      `/images/sample-products/${image2Name}`,
+    ];
+    await prisma.product.update({
+      where: { id },
+      data: {
+        images: imagesUrl,
+      },
+    });
+  }
   try {
     await prisma.product.update({
       where: { id },
@@ -152,7 +188,9 @@ export async function updateProduct(prevState: unknown, formData: FormData) {
         isFeatured: formData.get("isFeatured") === "TRUE" ? true : false,
       },
     });
-    return { message: "Product Updated Successfully" };
+    return {
+      message: "Product Updated Successfully",
+    };
   } catch (err) {
     return { message: "Something went wrong" };
   }

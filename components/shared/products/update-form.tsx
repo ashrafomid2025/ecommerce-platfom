@@ -10,6 +10,9 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { updateProduct } from "@/lib/action/product.action";
+import { cn } from "@/lib/utils";
+import { X } from "lucide-react";
+import Image from "next/image";
 
 import React, { useActionState, useState } from "react";
 import { toast } from "sonner";
@@ -19,6 +22,18 @@ function UpdateForm({ product }: { product: any }) {
     message: "",
   });
 
+  const [showImage1, setShowImage1] = useState(true);
+  const [showImage2, setShowImage2] = useState(true);
+  {
+    data &&
+      data.message === "Product Updated Successfully" &&
+      toast.success("Product update successfully");
+  }
+  {
+    data &&
+      data.message === "Something went wrong" &&
+      toast.error("Failed to updated product");
+  }
   return (
     <div>
       <form action={action} className="flex flex-col gap-2">
@@ -89,10 +104,65 @@ function UpdateForm({ product }: { product: any }) {
               type="text"
               placeholder="Product brand"
             />
-            {/* <div className="flex justify-between gap-2 flex-wrap">
-              <Input type="file" name="image1" accept="image/*" />
-              <Input type="file" name="image2" accept="image/*" />
-            </div> */}
+            <div className="flex  gap-2 flex-wrap">
+              {!showImage1 && (
+                <div>
+                  <Input type="file" name="image1" accept="image/*" />
+                  <Input
+                    type="text"
+                    name="oldimage1"
+                    defaultValue={product.images[0]}
+                    className="hidden"
+                  />
+                </div>
+              )}
+              {!showImage2 && (
+                <div>
+                  <Input
+                    type="text"
+                    className="hidden"
+                    name="oldimage2"
+                    defaultValue={product.images[1]}
+                  />
+                  <Input type="file" name="image2" accept="image/*" />
+                </div>
+              )}
+
+              <div
+                className={cn(
+                  showImage1 ? "relative block" : "hidden relative",
+                )}
+              >
+                <X
+                  onClick={() => setShowImage1(!showImage1)}
+                  size={10}
+                  className="absolute right-0 top-0"
+                />
+
+                <Image
+                  src={product.images[0]}
+                  alt="image1"
+                  height={80}
+                  width={80}
+                />
+              </div>
+              <div
+                className={showImage2 ? "block relative" : "hidden relative"}
+              >
+                <X
+                  onClick={() => setShowImage2(!showImage2)}
+                  size={10}
+                  className="absolute right-0 top-0"
+                />
+
+                <Image
+                  src={product.images[1]}
+                  alt="image1"
+                  height={80}
+                  width={80}
+                />
+              </div>
+            </div>
           </div>
           <div>
             <Textarea
