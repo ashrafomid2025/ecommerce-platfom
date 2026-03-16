@@ -1,14 +1,4 @@
 import React, { useActionState, useState } from "react";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -115,10 +105,26 @@ function UpdateForm({ product }: { product: any }) {
             />
             <div className="flex flex-wrap gap-2">
               {!showImage1 && (
-                <Input type="file" name="image1" accept="image/*" />
+                <div>
+                  <Input type="file" name="image1" accept="image/*" />
+                  <Input
+                    type="text"
+                    defaultValue={product.images[0]}
+                    name="oldImage1"
+                    className="hidden"
+                  />
+                </div>
               )}
               {!showImage2 && (
-                <Input type="file" name="image2" accept="image/*" />
+                <div>
+                  <Input type="file" name="image2" accept="image/*" />
+                  <Input
+                    type="text"
+                    defaultValue={product.images[1]}
+                    name="oldImage2"
+                    className="hidden"
+                  />
+                </div>
               )}
               <div
                 className={cn(

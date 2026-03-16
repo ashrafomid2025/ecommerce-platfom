@@ -145,6 +145,49 @@ export async function deleteProduct(prevState: unknown, formData: FormData) {
 // update product
 export async function updateProduct(prevState: unknown, formData: FormData) {
   const id = formData.get("id") as string;
+
+  const image1 = formData.get("image1") as File;
+  const image2 = formData.get("image2") as File;
+
+  if (image1 && image2) {
+    const urlOldImage1 = formData.get("oldImage1") as string;
+    const urlOldImage2 = formData.get("oldImage2") as string;
+
+    // get full path of images
+    const fullPathForImage1 = path.join(process.cwd(), "public", urlOldImage1);
+    const fullPathForImage2 = path.join(process.cwd(), "public", urlOldImage2);
+
+    // deleting the previous images
+    try {
+      await unlink(fullPathForImage1);
+      await unlink(fullPathForImage2);
+    } catch (err) {
+      console.log("The images have already been deleted");
+    }
+
+    const uploadDir = path.join(process.cwd(), "public/images/sample-products");
+
+    const image1Name = `${Date.now()}-${image1.name}`;
+    const image2Name = `${Date.now()}-${image2.name}`;
+
+    const image1Buffer = Buffer.from(await image1.arrayBuffer());
+    const image2Buffer = Buffer.from(await image2.arrayBuffer());
+
+    await mkdir(uploadDir, { recursive: true });
+    await writeFile(path.join(uploadDir, image1Name), image1Buffer);
+    await writeFile(path.join(uploadDir, image2Name), image2Buffer);
+
+    const productImages = [
+      `/images/sample-products/${image1Name}`,
+      `/images/sample-products/${image2Name}`,
+    ];
+
+    await prisma.products.update({
+      where: { id },
+      data: { images: productImages },
+    });
+  }
+
   try {
     //   ProductInsertSchema.parse({
     //     name: formData.get("name"),
