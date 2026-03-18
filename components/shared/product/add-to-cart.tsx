@@ -1,0 +1,32 @@
+"use client";
+import { Button } from "@/components/ui/button";
+import { AddItemToCart } from "@/lib/actions/cart.action";
+import { CartItem } from "@/types/product";
+import { useRouter } from "next/navigation";
+import React from "react";
+import { toast } from "sonner";
+
+function AddToCart({ item }: { item: CartItem }) {
+  const router = useRouter();
+  const handleCart = async () => {
+    const response = await AddItemToCart(item);
+    if (!response.success) {
+      toast.error("Something bad happened");
+      return;
+    }
+    toast("Item added", {
+      description: `${item.name} added to cart`,
+      action: {
+        label: "Go To Cart",
+        onClick: () => router.push("/cart"),
+      },
+    });
+  };
+  return (
+    <Button className="w-full" onClick={handleCart}>
+      Add to cart
+    </Button>
+  );
+}
+
+export default AddToCart;

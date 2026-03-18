@@ -2,16 +2,16 @@ import { hashSync } from "bcrypt-ts-edge";
 const sampleData = {
   users: [
     {
-      name: "Ahmad",
-      email: "ahmad@example.com",
+      name: "Ali Reza",
+      email: "ali@example.com",
       role: "user",
-      password: hashSync("123456", 10),
+      password: hashSync("p123456", 10),
     },
     {
-      name: "Ali",
-      email: "ali@example.com",
+      name: "Admin",
+      email: "admin@example.com",
       role: "admin",
-      password: hashSync("123457", 10),
+      password: hashSync("p123457", 10),
     },
   ],
   products: [
@@ -98,23 +98,6 @@ const sampleData = {
       numReviews: 18,
       stock: 6,
       isFeatured: false,
-      banner: null,
-    },
-    {
-      name: "Polo Classic Pink Hoodie",
-      slug: "polo-classic-pink-hoodie",
-      category: "Men's Sweatshirts",
-      description: "Soft, stylish, and perfect for laid-back days",
-      images: [
-        "/images/sample-products/p6-1.jpg",
-        "/images/sample-products/p6-2.jpg",
-      ],
-      price: 99.99,
-      brand: "Polo",
-      rating: 4.6,
-      numReviews: 12,
-      stock: 8,
-      isFeatured: true,
       banner: null,
     },
   ],
