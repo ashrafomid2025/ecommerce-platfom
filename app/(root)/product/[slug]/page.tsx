@@ -1,3 +1,4 @@
+import AddToCart from "@/components/shared/products/add-to-cart";
 import ProductImages from "@/components/shared/products/product-image";
 import ProductPrice from "@/components/shared/products/product-price";
 import { Badge } from "@/components/ui/badge";
@@ -64,7 +65,16 @@ export default async function DetailsPage({
                 </div>
                 {product.stock > 0 && (
                   <div className="w-full flex-center">
-                    <Button className="w-full">Add To Cart</Button>
+                    <AddToCart
+                      item={{
+                        productId: product.id,
+                        name: product.name,
+                        slug: product.slug,
+                        image: product.images![0],
+                        qty: 1,
+                      }}
+                    />
+                    {/* button  */}
                   </div>
                 )}
               </CardContent>

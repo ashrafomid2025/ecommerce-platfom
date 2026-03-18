@@ -49,17 +49,19 @@ export const signUpValidationSchema = z
 
 // cart item schema
 export const cartItemValidationSchema = z.object({
-  id: z.string().min(3, "The product must be at least 3 characters"),
+  productId: z.string().min(3, "The product must be at least 3 characters"),
   name: z.string().min(4, "The product name must be at least 4 chars"),
   slug: z.string().min(4, "The slug must be at least 4 char"),
   image: z.string().min(7, "the image url is required"),
-  price: currency,
+
   qty: z.number().nonnegative("the qantity must a positive number"),
 });
 export const InsertCartSchema = z.object({
   items: z.array(cartItemValidationSchema),
+  itemsPrice: currency,
   totalPrice: currency,
   shippingPrice: currency,
   taxPrice: currency,
+  sessionCartId: z.string().min(1, "session cart id is required"),
   userId: z.string().optional().nullable(),
 });
