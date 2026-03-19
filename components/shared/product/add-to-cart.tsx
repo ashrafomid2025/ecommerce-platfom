@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { AddItemToCart } from "@/lib/actions/cart.action";
 import { CartItem } from "@/types/product";
+import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
@@ -24,7 +25,7 @@ function AddToCart({ item }: { item: CartItem }) {
   };
   return (
     <Button className="w-full" onClick={handleCart}>
-      Add to cart
+      <Plus size={14} /> Add to cart
     </Button>
   );
 }
