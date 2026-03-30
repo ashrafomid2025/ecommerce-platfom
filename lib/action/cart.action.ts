@@ -11,9 +11,15 @@ function calcPrice(items: CartItem[]) {
   const itemsPrice = round2(
     items.reduce((total, item) => total + Number(item.price) * item.qty, 0),
   );
-  const shippingPrice = round2(itemsPrice > 100 ? 0 : itemsPrice + 10);
+  const shippingPrice = round2(itemsPrice > 100 ? 0 : 10);
   const taxPrice = round2(itemsPrice * 0.03);
   const totalPrice = round2(itemsPrice + shippingPrice + taxPrice);
+  return {
+    itemsPrice: itemsPrice.toFixed(2),
+    taxPrice: taxPrice.toFixed(2),
+    shippingPrice: shippingPrice.toFixed(2),
+    totalPrice: totalPrice.toFixed(2),
+  };
 }
 
 export async function AddItemToCart(item: CartItem) {
