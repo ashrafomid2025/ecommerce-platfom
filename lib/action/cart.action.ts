@@ -1,13 +1,20 @@
 "use server";
 
 import { auth } from "@/auth";
-import { CartItem } from "@/types";
+import { Cart, CartItem } from "@/types";
 import { cookies } from "next/headers";
 import { prisma } from "../db/lib";
-import { convertToPlainObject } from "../utils";
+import { convertToPlainObject, round2 } from "../utils";
 import { cartItemValidationSchema } from "../validator";
 
-function calcPrice(items: CartItem[]) {}
+function calcPrice(items: CartItem[]) {
+  const itemsPrice = round2(
+    items.reduce((total, item) => total + Number(item.price) * item.qty, 0),
+  );
+  const shippingPrice = round2(itemsPrice > 100 ? 0 : itemsPrice + 10);
+  const taxPrice = round2(itemsPrice * 0.03);
+  const totalPrice = round2(itemsPrice + shippingPrice + taxPrice);
+}
 
 export async function AddItemToCart(item: CartItem) {
   try {

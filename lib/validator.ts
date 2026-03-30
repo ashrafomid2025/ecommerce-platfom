@@ -53,7 +53,7 @@ export const cartItemValidationSchema = z.object({
   name: z.string().min(4, "The product name must be at least 4 chars"),
   slug: z.string().min(4, "The slug must be at least 4 char"),
   image: z.string().min(7, "the image url is required"),
-
+  price: currency,
   qty: z.number().nonnegative("the qantity must a positive number"),
 });
 export const InsertCartSchema = z.object({
