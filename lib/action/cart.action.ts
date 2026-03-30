@@ -21,11 +21,11 @@ export async function AddItemToCart(item: CartItem) {
 
     // validate the data
     const validateData = cartItemValidationSchema.parse(item);
-    // total price calc
-    const product = await prisma.product.findFirst({ where: {} });
+    // find product in db
     return {
       success: true,
       message: "Item added to Cart",
+      item: validateData,
     };
   } catch (err) {
     return {
@@ -47,6 +47,7 @@ export async function getMyCart() {
   if (!cartData) return undefined;
   return convertToPlainObject({
     ...cartData,
+    items: cartData.items as CartItem[],
     totalPrice: cartData.totalPrice.toString(),
     taxPrice: cartData.taxPrice.toString(),
     shippingPrice: cartData.shippingPrice.toString(),
