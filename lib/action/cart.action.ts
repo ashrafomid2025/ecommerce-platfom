@@ -6,6 +6,9 @@ import { cookies } from "next/headers";
 import { prisma } from "../db/lib";
 import { convertToPlainObject } from "../utils";
 import { cartItemValidationSchema } from "../validator";
+
+function calcPrice(items: CartItem[]) {}
+
 export async function AddItemToCart(item: CartItem) {
   try {
     const sessionCartId = (await cookies()).get("sessionCartId")?.value;
@@ -13,10 +16,19 @@ export async function AddItemToCart(item: CartItem) {
     const session = await auth();
     const userId = session?.user?.id ? (session.user.id as string) : undefined;
     const cart = await getMyCart();
+
+    const selectedItem = cartItemValidationSchema.parse(item);
+
+    const product = await prisma.product.findFirst({
+      where: { id: selectedItem.productId },
+    });
+    if (!product) throw new Error("Product not found");
+    // Testing
     console.log({
       sessionCartId: sessionCartId,
       userId: userId,
-      cartData: cart,
+      item: selectedItem,
+      productSelected: product,
     });
 
     // validate the data
