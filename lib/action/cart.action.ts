@@ -5,19 +5,19 @@ import { Cart, CartItem } from "@/types";
 import { cookies } from "next/headers";
 import { prisma } from "../db/lib";
 import { convertToPlainObject, round2 } from "../utils";
-import { cartItemValidationSchema } from "../validator";
+import { cartItemValidationSchema, InsertCartSchema } from "../validator";
 
 function calcPrice(items: CartItem[]) {
   const itemsPrice = round2(
-    items.reduce((total, item) => total + Number(item.price) * item.qty, 0),
+    items.reduce((total, item) => (total + Number(item.price)) * item.qty, 0),
   );
   const shippingPrice = round2(itemsPrice > 100 ? 0 : 10);
   const taxPrice = round2(itemsPrice * 0.03);
   const totalPrice = round2(itemsPrice + shippingPrice + taxPrice);
   return {
     itemsPrice: itemsPrice.toFixed(2),
-    taxPrice: taxPrice.toFixed(2),
     shippingPrice: shippingPrice.toFixed(2),
+    taxPrice: taxPrice.toFixed(2),
     totalPrice: totalPrice.toFixed(2),
   };
 }
@@ -36,13 +36,25 @@ export async function AddItemToCart(item: CartItem) {
       where: { id: selectedItem.productId },
     });
     if (!product) throw new Error("Product not found");
+    if (!cart) {
+      const data = InsertCartSchema.parse({
+        items: [selectedItem],
+        userId: userId,
+        sessionCartId: sessionCartId,
+        ...calcPrice([selectedItem]),
+      });
+      console.log(data);
+      // const data = {
+      //   items: [selectedItem],
+      //   userId: userId,
+      //   sessionCartId: sessionCartId,
+      //   ...calcPrice([selectedItem]),
+      // };
+      // await prisma.cart.create({
+      //   data: data,
+      // });
+    }
     // Testing
-    console.log({
-      sessionCartId: sessionCartId,
-      userId: userId,
-      item: selectedItem,
-      productSelected: product,
-    });
 
     // validate the data
     const validateData = cartItemValidationSchema.parse(item);

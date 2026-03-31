@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getSingleProduct } from "@/lib/action/product.action";
+import { priceConverter } from "@/lib/utils";
 import { notFound } from "next/navigation";
 
 export default async function DetailsPage({
@@ -72,6 +73,7 @@ export default async function DetailsPage({
                         slug: product.slug,
                         image: product.images![0],
                         qty: 1,
+                        price: priceConverter(Number(product.price)),
                       }}
                     />
                     {/* button  */}
