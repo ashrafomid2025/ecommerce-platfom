@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import { prisma } from "../db/lib";
 import { convertToPlainObject, round2 } from "../utils";
 import { cartItemValidationSchema, InsertCartSchema } from "../validator";
+import { revalidatePath } from "next/cache";
 
 function calcPrice(items: CartItem[]) {
   const itemsPrice = round2(
@@ -27,6 +28,7 @@ export async function AddItemToCart(item: CartItem) {
     const sessionCartId = (await cookies()).get("sessionCartId")?.value;
     if (!sessionCartId) throw new Error("Session Cart Id Not Found");
     const session = await auth();
+    console.log(sessionCartId);
     const userId = session?.user?.id ? (session.user.id as string) : undefined;
     const cart = await getMyCart();
 
@@ -37,22 +39,31 @@ export async function AddItemToCart(item: CartItem) {
     });
     if (!product) throw new Error("Product not found");
     if (!cart) {
-      const data = InsertCartSchema.parse({
-        items: [selectedItem],
-        userId: userId,
-        sessionCartId: sessionCartId,
-        ...calcPrice([selectedItem]),
-      });
-      console.log(data);
-      // const data = {
+      // const data = InsertCartSchema.parse({
       //   items: [selectedItem],
       //   userId: userId,
       //   sessionCartId: sessionCartId,
       //   ...calcPrice([selectedItem]),
-      // };
-      // await prisma.cart.create({
-      //   data: data,
       // });
+      // console.log(data);
+      const data = {
+        items: [selectedItem],
+        userId: userId,
+        sessionCartId: sessionCartId,
+        ...calcPrice([selectedItem]),
+      };
+      await prisma.cart.create({
+        data: data,
+      });
+      revalidatePath(`product/${product.slug}`);
+    }
+    if (cart) {
+      // const data = {
+      //   ...calcPrice([selectedItem]),
+      //   items: [selectedItem],
+      // };
+
+      const cart = await getMyCart();
     }
     // Testing
 

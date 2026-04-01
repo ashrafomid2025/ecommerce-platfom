@@ -73,10 +73,9 @@ export default async function DetailsPage({
                         slug: product.slug,
                         image: product.images![0],
                         qty: 1,
-                        price: priceConverter(Number(product.price)),
+                        price: product.price.toString(),
                       }}
                     />
-                    {/* button  */}
                   </div>
                 )}
               </CardContent>
