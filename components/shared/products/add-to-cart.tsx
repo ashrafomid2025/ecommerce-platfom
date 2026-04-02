@@ -13,11 +13,11 @@ function AddToCart({ item }: { item: CartItem }) {
     const response = await AddItemToCart(item);
 
     if (!response.success) {
-      toast.error("Something bad Happened");
+      toast.error(response.message);
       return;
     }
     toast("Item Added", {
-      description: `${item.name} added to cart`,
+      description: `${response.message}`,
       action: {
         label: "Go To Cart",
         onClick: () => router.push("/cart"),
