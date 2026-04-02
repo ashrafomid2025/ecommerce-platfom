@@ -16,7 +16,7 @@ function AddToCart({ item }: { item: CartItem }) {
       toast.error(response.message);
       return;
     }
-    toast("Item Added", {
+    toast("Cart Info", {
       description: `${response.message}`,
       action: {
         label: "Go To Cart",
