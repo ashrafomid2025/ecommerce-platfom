@@ -91,7 +91,7 @@ export async function AddItemToCart(item: CartItem) {
       revalidatePath(`/product/${product.slug}`);
       return {
         success: true,
-        message: `${item.name} ${existItem ? "updated in" : "added to"} cart`,
+        message: `${item.name} ${existItem ? "updated In" : "added to"} cart`,
       };
     }
     // validate the data
