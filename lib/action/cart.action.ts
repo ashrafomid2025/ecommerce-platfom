@@ -4,7 +4,7 @@ import { auth } from "@/auth";
 import { Cart, CartItem } from "@/types";
 import { cookies } from "next/headers";
 import { prisma } from "../db/lib";
-import { convertToPlainObject, round2 } from "../utils";
+import { convertToPlainObject, formatError, round2 } from "../utils";
 import { cartItemValidationSchema, InsertCartSchema } from "../validator";
 import { revalidatePath } from "next/cache";
 import { Prisma } from "../generated/prisma/client";
@@ -121,4 +121,51 @@ export async function getMyCart() {
     shippingPrice: cartData.shippingPrice.toString(),
     itemsPrice: cartData.itemsPrice.toString(),
   });
+}
+
+export async function removeFromCart(productId: string) {
+  try {
+    const sessionCartId = (await cookies()).get("sessionCartId")?.value;
+    if (!sessionCartId) throw new Error("Session Cart Id Not Found");
+    const product = await prisma.product.findFirst({
+      where: { id: productId },
+    });
+    if (!product) throw new Error("product not found");
+
+    const cart = await getMyCart();
+    // if use has no cart
+    if (!cart) throw new Error("cart not found");
+
+    const existItem = (cart.items as CartItem[]).find(
+      (y) => y.productId == productId,
+    );
+    if (!existItem) throw new Error("item you are looking for not found");
+    if (existItem?.qty === 1) {
+      cart.items = (cart.items as CartItem[]).filter(
+        (item) => item.productId !== productId,
+      );
+    } else {
+      (cart.items as CartItem[]).find((t) => t.productId === productId)!.qty =
+        existItem?.qty - 1;
+    }
+
+    // database
+    await prisma.cart.update({
+      where: { id: cart.id },
+      data: {
+        items: cart.items,
+        ...calcPrice(cart.items),
+      },
+    });
+
+    return {
+      success: true,
+      message: `${product.name} has been removed from cart`,
+    };
+  } catch (err) {
+    return {
+      success: false,
+      message: formatError(err),
+    };
+  }
 }

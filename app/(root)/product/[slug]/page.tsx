@@ -4,6 +4,7 @@ import ProductPrice from "@/components/shared/products/product-price";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { getMyCart } from "@/lib/action/cart.action";
 import { getSingleProduct } from "@/lib/action/product.action";
 import { priceConverter } from "@/lib/utils";
 import { notFound } from "next/navigation";
@@ -13,6 +14,7 @@ export default async function DetailsPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  const cart = await getMyCart();
   const { slug } = await params;
   const product = await getSingleProduct(slug);
   if (!product) notFound();
@@ -67,6 +69,7 @@ export default async function DetailsPage({
                 {product.stock > 0 && (
                   <div className="w-full flex-center">
                     <AddToCart
+                      cart={cart}
                       item={{
                         productId: product.id,
                         name: product.name,
