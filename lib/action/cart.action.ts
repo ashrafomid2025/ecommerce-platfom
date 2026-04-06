@@ -130,15 +130,18 @@ export async function removeFromCart(productId: string) {
     const product = await prisma.product.findFirst({
       where: { id: productId },
     });
+
     if (!product) throw new Error("product not found");
 
     const cart = await getMyCart();
+
     // if use has no cart
     if (!cart) throw new Error("cart not found");
 
     const existItem = (cart.items as CartItem[]).find(
-      (y) => y.productId == productId,
+      (x) => x.productId == productId,
     );
+    console.log(existItem);
     if (!existItem) throw new Error("item you are looking for not found");
     if (existItem?.qty === 1) {
       cart.items = (cart.items as CartItem[]).filter(
@@ -157,7 +160,7 @@ export async function removeFromCart(productId: string) {
         ...calcPrice(cart.items),
       },
     });
-
+    revalidatePath(`product/${product.slug}`);
     return {
       success: true,
       message: `${product.name} has been removed from cart`,
